@@ -41,7 +41,9 @@ end
 function c80143954.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return end
-	e:GetOwner():CancelToGrave(false)
+	if e:GetOwner():IsRelateToChain(ev) then
+		e:GetOwner():CancelToGrave(false)
+	end
 end
 function c80143954.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x103)
@@ -66,12 +68,12 @@ function c80143954.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(c80143954.eqlimit)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--negate
 		local e4=Effect.CreateEffect(c)
@@ -81,7 +83,7 @@ function c80143954.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetLabelObject(tc)
 		e4:SetCondition(c80143954.negcon)
 		e4:SetOperation(c80143954.negop)
-		e4:SetReset(RESET_EVENT+0x1fe0000)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e4)
 	else
 		c:CancelToGrave(false)
@@ -93,14 +95,14 @@ end
 function c80143954.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and g and g:IsContains(e:GetLabelObject())
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and g and g:IsContains(e:GetLabelObject())
 end
 function c80143954.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function c80143954.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsLocation(LOCATION_ONFIELD)
-		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c80143954.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c80143954.repfilter,1,nil,tp) end

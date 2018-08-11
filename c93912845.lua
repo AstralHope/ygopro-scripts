@@ -16,7 +16,8 @@ function c93912845.spfilter(c,e,tp)
 end
 function c93912845.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c93912845.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.IsExistingTarget(c93912845.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,93912846,0,0x4011,1500,1500,3,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,1-tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -31,17 +32,18 @@ function c93912845.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+0x1fe0000)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 		end
 	end
-	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>1 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,93912846,0,0x4011,1500,1500,3,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,1-tp) then
+	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>1 
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,93912846,0,0x4011,1500,1500,3,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,1-tp)
+		and not Duel.IsPlayerAffectedByEffect(tp,59822133) then
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,93912846)
 			Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP)

@@ -5,7 +5,7 @@ function c67464807.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_ATTACK,0x1e0)
+	e1:SetHintTiming(TIMING_ATTACK,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCondition(c67464807.condition)
 	e1:SetTarget(c67464807.target)
 	e1:SetOperation(c67464807.activate)
@@ -15,7 +15,7 @@ function c67464807.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function c67464807.filter(c)
-	return c:IsFaceup() and c:GetLevel()>1
+	return c:IsFaceup() and c:IsLevelAbove(2)
 end
 function c67464807.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c67464807.filter(chkc) end
@@ -41,7 +41,7 @@ function c67464807.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c67464807.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and ep==tp and eg:GetFirst():GetLevel()==e:GetLabel()-1
+	return Duel.GetTurnPlayer()==tp and ep==tp and eg:GetFirst():IsLevel(e:GetLabel()-1)
 end
 function c67464807.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,e:GetLabel()*500,REASON_EFFECT)

@@ -33,7 +33,7 @@ end
 function c43583400.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:GetBattleTarget() then return end
-	c:RegisterFlagEffect(43583400,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE,0,1)
+	c:RegisterFlagEffect(43583400,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
 end
 function c43583400.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and e:GetHandler():GetFlagEffect(43583400)>0
@@ -55,7 +55,7 @@ function c43583400.sumop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c43583400.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
+	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function c43583400.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

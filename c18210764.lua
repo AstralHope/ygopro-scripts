@@ -65,7 +65,7 @@ function c18210764.teop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c18210764.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:GetLevel()==1
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsLevel(1)
 		and not c:IsCode(18210764) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c18210764.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -82,7 +82,7 @@ function c18210764.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x47e0000)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		g:GetFirst():RegisterEffect(e1,true)
 	end

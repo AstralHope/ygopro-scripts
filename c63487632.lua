@@ -78,7 +78,7 @@ function c63487632.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c63487632.eqlimit)
 		tc:RegisterEffect(e1)
 	end
@@ -94,7 +94,7 @@ function c63487632.eqcheck(e,tp,eg,ep,ev,re,r,rp)
 end
 function c63487632.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and rp~=tp and c:GetPreviousLocation()==LOCATION_MZONE
+	return c:IsReason(REASON_EFFECT) and rp==1-tp and c:GetPreviousLocation()==LOCATION_MZONE
 end
 function c63487632.spfilter2(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

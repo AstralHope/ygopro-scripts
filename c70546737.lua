@@ -24,8 +24,7 @@ function c70546737.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c70546737.filter(c,clv)
-	local lv=c:GetLevel()
-	return c:IsSetCard(0x87) and lv~=0 and lv~=clv
+	return c:IsSetCard(0x87) and not c:IsLevel(clv)
 		and ((c:IsLocation(LOCATION_MZONE) and c:IsFaceup()) or c:IsLocation(LOCATION_GRAVE))
 end
 function c70546737.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -43,7 +42,7 @@ function c70546737.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+0x1ff0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

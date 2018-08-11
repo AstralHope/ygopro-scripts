@@ -70,7 +70,7 @@ function c64496451.splimit(e,c)
 end
 function c64496451.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return minc==0 and c:IsLevelAbove(5) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c64496451.lvcon(e)
 	return e:GetHandler():GetMaterialCount()==0
@@ -140,8 +140,8 @@ function c64496451.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-		sg:GetFirst():RegisterFlagEffect(64496451,RESET_EVENT+0x1fe0000,0,0,fid)
-		sg:GetNext():RegisterFlagEffect(64496451,RESET_EVENT+0x1fe0000,0,0,fid)
+		sg:GetFirst():RegisterFlagEffect(64496451,RESET_EVENT+RESETS_STANDARD,0,0,fid)
+		sg:GetNext():RegisterFlagEffect(64496451,RESET_EVENT+RESETS_STANDARD,0,0,fid)
 		sg:KeepAlive()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

@@ -23,7 +23,7 @@ function c89521713.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c89521713.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
+	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()==1-tp
 		and e:GetHandler():GetPreviousControler()==tp
 end
 function c89521713.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -55,7 +55,7 @@ function c89521713.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+0x1ff0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 			c:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_ATTACK)

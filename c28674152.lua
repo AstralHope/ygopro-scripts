@@ -31,19 +31,17 @@ function c28674152.initial_effect(c)
 	e3:SetOperation(c28674152.tkop)
 	c:RegisterEffect(e3)
 end
-function c28674152.spfilter(c,ft)
-	return c:IsReleasable() and (ft>0 or c:GetSequence()<5)
+function c28674152.spfilter(c,tp)
+	return c:IsReleasable() and Duel.GetMZoneCount(1-tp,c,tp)>0
 end
 function c28674152.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	return ft>-1 and Duel.IsExistingMatchingCard(c28674152.spfilter,tp,0,LOCATION_MZONE,1,nil,ft)
+	return Duel.IsExistingMatchingCard(c28674152.spfilter,tp,0,LOCATION_MZONE,1,nil,tp)
 end
 function c28674152.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,c28674152.spfilter,tp,0,LOCATION_MZONE,1,1,nil,ft)
+	local g=Duel.SelectMatchingCard(tp,c28674152.spfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function c28674152.cfilter(c)
@@ -73,7 +71,7 @@ function c28674152.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(1)
 	token:RegisterEffect(e1,true)
 end

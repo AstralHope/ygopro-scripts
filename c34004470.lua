@@ -42,13 +42,13 @@ function c34004470.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function c34004470.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(r,0x41)==0x41 and rp~=tp and c:GetPreviousControler()==tp
+	return bit.band(r,0x41)==0x41 and rp==1-tp and c:GetPreviousControler()==tp
 end
 function c34004470.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

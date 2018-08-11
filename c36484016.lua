@@ -2,7 +2,7 @@
 function c36484016.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(c36484016.target)
@@ -55,6 +55,7 @@ function c36484016.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c36484016.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
@@ -99,7 +100,7 @@ function c36484016.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c36484016.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(r,0x41)==0x41 and rp~=tp and c:GetPreviousControler()==tp
+	return bit.band(r,0x41)==0x41 and rp==1-tp and c:GetPreviousControler()==tp
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function c36484016.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

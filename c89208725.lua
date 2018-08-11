@@ -10,7 +10,7 @@ function c89208725.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c89208725.filter(c,tp)
-	return c:IsType(TYPE_FIELD) and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp))
+	return c:IsType(TYPE_FIELD) and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp,true,true))
 end
 function c89208725.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c89208725.filter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -34,6 +34,7 @@ function c89208725.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 			end
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			te:UseCountLimit(tp,1,true)
 			local tep=tc:GetControler()
 			local cost=te:GetCost()
 			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end

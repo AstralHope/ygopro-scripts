@@ -33,6 +33,7 @@ function c46247282.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EFFECT_DISABLE_FIELD)
+	e4:SetProperty(EFFECT_FLAG_REPEAT)
 	e4:SetOperation(c46247282.disop)
 	c:RegisterEffect(e4)
 end
@@ -74,9 +75,5 @@ function c46247282.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c46247282.disop(e,tp)
 	local c=e:GetHandler()
-	local flag1=bit.band(c:GetColumnZone(LOCATION_MZONE),0xffffff00)
-	local flag2=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE),8),0xffff00ff)
-	local flag3=bit.band(c:GetColumnZone(LOCATION_MZONE),0xff00ffff)
-	local flag4=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE),8),0xffff)
-	return flag1+flag2+flag3+flag4
+	return c:GetColumnZone(LOCATION_ONFIELD)
 end

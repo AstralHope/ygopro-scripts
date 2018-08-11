@@ -24,7 +24,7 @@ function c16960351.rfilter(c,e,tp,ft)
 		and Duel.IsExistingMatchingCard(c16960351.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,lv)
 end
 function c16960351.spfilter(c,e,tp,lv)
-	return c:GetLevel()==lv and c:IsRace(RACE_WYRM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(lv) and c:IsRace(RACE_WYRM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c16960351.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -50,7 +50,7 @@ function c16960351.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 		e1:SetValue(LOCATION_DECKSHF)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -24,7 +24,7 @@ function c33460840.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c33460840.filter(c,ec)
-	return c:IsRace(RACE_DRAGON) and (c:GetLevel()==7 or c:GetLevel()==8) and not c:IsForbidden()
+	return c:IsRace(RACE_DRAGON) and c:IsLevel(7,8) and not c:IsForbidden()
 end
 function c33460840.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -47,7 +47,7 @@ function c33460840.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(c33460840.eqlimit)
 	tc:RegisterEffect(e1)
 	--atk/def
@@ -56,7 +56,7 @@ function c33460840.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end
@@ -65,7 +65,7 @@ function c33460840.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_EQUIP)
 		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e3:SetCode(EFFECT_UPDATE_DEFENSE)
-		e3:SetReset(RESET_EVENT+0x1fe0000)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(def)
 		tc:RegisterEffect(e3)
 	end
@@ -74,7 +74,7 @@ function c33460840.eqlimit(e,c)
 	return e:GetOwner()==c
 end
 function c33460840.spfilter(c,e,tp)
-	return c:IsRace(RACE_DRAGON) and (c:GetLevel()==7 or c:GetLevel()==8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_DRAGON) and c:IsLevel(7,8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c33460840.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

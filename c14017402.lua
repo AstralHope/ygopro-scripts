@@ -39,7 +39,7 @@ function c14017402.splimit(e,se,sp,st)
 	return true
 end
 function c14017402.refcon(e,re,val,r,rp,rc)
-	return bit.band(r,REASON_EFFECT)~=0 and rp~=e:GetHandler():GetControler()  and e:GetHandler():IsAttackPos()
+	return bit.band(r,REASON_EFFECT)~=0 and rp==1-e:GetHandler():GetControler()  and e:GetHandler():IsAttackPos()
 end
 function c14017402.ffilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsFusionType(TYPE_SYNCHRO)
@@ -60,7 +60,7 @@ function c14017402.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
 		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=1 then return end
 		local code=tc:GetOriginalCode()
-		local reset_flag=RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END
+		local reset_flag=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END
 		c:CopyEffect(code, reset_flag, 1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

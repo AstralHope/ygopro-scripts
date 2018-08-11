@@ -54,7 +54,7 @@ function c50260683.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -64,7 +64,7 @@ function c50260683.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c50260683.filter2(c)
-	return c:IsFaceup() and c:GetAttack()~=c:GetBaseAttack()
+	return c:IsFaceup() and not c:IsAttack(c:GetBaseAttack())
 end
 function c50260683.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c50260683.filter2(chkc) end
@@ -75,7 +75,7 @@ function c50260683.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c50260683.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetAttack()~=tc:GetBaseAttack() then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsAttack(tc:GetBaseAttack()) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

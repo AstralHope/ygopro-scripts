@@ -51,11 +51,11 @@ end
 function c73289035.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetHandler():GetOverlayCount()
 	e:SetLabel(ct)
-	return rp~=tp and bit.band(r,REASON_EFFECT)~=0 and ct>0
+	return rp==1-tp and bit.band(r,REASON_EFFECT)~=0 and ct>0
 		and e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c73289035.spfilter(c,e,tp)
-	return c:GetLevel()==4 and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(4) and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c73289035.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c73289035.spfilter(chkc,e,tp) end

@@ -21,7 +21,7 @@ end
 function c98905.callback(c)
 	local tp=c:GetPreviousControler()
 	if c:IsSetCard(0xe5) and c:IsType(TYPE_XYZ) and c:IsControler(tp) and c:GetOverlayCount()>0 then
-		c:RegisterFlagEffect(98905,RESET_EVENT+0x1fe0000,0,1)
+		c:RegisterFlagEffect(98905,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function c98905.checkop(e,tp,eg,ep,ev,re,r,rp)
@@ -29,7 +29,7 @@ function c98905.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c98905.filter(c,e,tp)
 	return c:GetFlagEffect(98905)~=0 and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
-		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)
+		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(c98905.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
 end

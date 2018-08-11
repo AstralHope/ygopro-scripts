@@ -63,7 +63,7 @@ function c84569886.atkop1(e,tp,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		d:RegisterEffect(e1)
 	end
 end
@@ -91,17 +91,17 @@ function c84569886.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=a:GetBattleTarget()
 	if a:IsControler(tp) then a,d=d,a end
-	return a and a:IsControler(1-tp) and a:GetAttack()~=a:GetBaseAttack()
+	return a and a:IsControler(1-tp) and not a:IsAttack(a:GetBaseAttack())
 end
 function c84569886.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(tp) then tc=tc:GetBattleTarget() end
-	if tc and tc:IsFaceup() and tc:GetAttack()~=tc:GetBaseAttack() then
+	if tc and tc:IsFaceup() and not tc:IsAttack(tc:GetBaseAttack()) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetBaseAttack())
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
 		tc:RegisterEffect(e1)
 	end
 end

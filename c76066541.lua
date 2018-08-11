@@ -16,7 +16,7 @@ end
 function c76066541.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE)
-		or rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
+		or rp==1-tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c76066541.filter(c,e,tp)
@@ -35,7 +35,7 @@ function c76066541.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(76066541,RESET_EVENT+0x1fe0000,0,1,fid)
+		tc:RegisterFlagEffect(76066541,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

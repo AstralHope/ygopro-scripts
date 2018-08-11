@@ -42,6 +42,7 @@ function c80033124.fselect(c,tp,mg,sg,...)
 end
 function c80033124.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
+		if not aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_FMATERIAL) then return false end
 		if not Duel.IsExistingMatchingCard(c80033124.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then return false end
 		local mg=Duel.GetMatchingGroup(c80033124.ffilter0,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 		local sg=Group.CreateGroup()
@@ -53,8 +54,11 @@ function c80033124.cfilter(c)
 	return c:IsLocation(LOCATION_HAND) or (c:IsOnField() and c:IsFacedown())
 end
 function c80033124.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not aux.MustMaterialCheck(nil,tp,EFFECT_MUST_BE_FMATERIAL) then return end
+	if not Duel.IsExistingMatchingCard(c80033124.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then return end
 	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c80033124.ffilter),tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,e)
 	local sg=Group.CreateGroup()
+	if not mg:IsExists(c80033124.fselect,1,nil,tp,mg,sg,41230939,77625948,3019642) then return end
 	while sg:GetCount()<3 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=mg:FilterSelect(tp,c80033124.fselect,1,1,sg,tp,mg,sg,41230939,77625948,3019642)

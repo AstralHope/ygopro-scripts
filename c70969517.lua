@@ -39,7 +39,7 @@ function c70969517.otcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(c70969517.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	return c:IsLevelAbove(7) and minc<=1 and Duel.CheckTribute(c,1,1,mg)
 end
 function c70969517.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c70969517.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
@@ -54,7 +54,7 @@ function c70969517.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function c70969517.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,0x41)==0x41 and rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return bit.band(r,0x41)==0x41 and rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function c70969517.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -49,7 +49,7 @@ function c58257569.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(c58257569.eqlimit)
 		e1:SetLabelObject(tc)
 		c:RegisterEffect(e1)
@@ -58,7 +58,7 @@ function c58257569.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(300)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end
 end
@@ -70,7 +70,7 @@ function c58257569.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetPreviousLocation()==LOCATION_SZONE and not c:IsReason(REASON_LOST_TARGET)
 end
 function c58257569.thfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:GetLevel()==1 and c:IsAbleToHand()
+	return c:IsRace(RACE_DRAGON) and c:IsLevel(1) and c:IsAbleToHand()
 end
 function c58257569.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c58257569.thfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil) end

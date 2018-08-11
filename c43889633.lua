@@ -27,8 +27,7 @@ function c43889633.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c43889633.filter(c)
-	local lv=c:GetLevel()
-	return c:IsFaceup() and lv>0 and lv<=4 and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA) and c:IsAbleToRemove()
 end
 function c43889633.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c43889633.filter(chkc) end
@@ -41,7 +40,7 @@ function c43889633.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_REMOVED) then
-		tc:RegisterFlagEffect(43889634,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+		tc:RegisterFlagEffect(43889634,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(43889633,2))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -52,7 +51,7 @@ function c43889633.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c43889633.spcon)
 		e1:SetTarget(c43889633.sptg)
 		e1:SetOperation(c43889633.spop)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

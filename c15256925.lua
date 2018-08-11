@@ -38,14 +38,14 @@ function c15256925.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c15256925.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c15256925.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c15256925.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,aux.ExceptThisCard(e))
 	if g:GetCount()>0 then
 		Duel.HintSelection(g)
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
 function c15256925.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE) and rp~=tp
+	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE) and rp==1-tp
 end
 function c15256925.spfilter(c,e,tp)
 	return c:IsCode(30208479,40737112) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

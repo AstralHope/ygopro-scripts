@@ -23,7 +23,7 @@ function c51912531.synlimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function c51912531.filter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:GetLevel()>1
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelAbove(2)
 end
 function c51912531.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c51912531.filter(chkc) end
@@ -39,7 +39,7 @@ function c51912531.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(-1)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

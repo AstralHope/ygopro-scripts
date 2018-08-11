@@ -6,7 +6,7 @@ function c86607583.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_COUNTER+CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,86607583+EFFECT_COUNT_CODE_DUEL)
+	e1:SetCountLimit(1,86607583+EFFECT_COUNT_CODE_DUEL+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c86607583.cost)
 	e1:SetTarget(c86607583.target)
 	e1:SetOperation(c86607583.operation)
@@ -48,7 +48,9 @@ end
 function c86607583.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return end
-	e:GetOwner():CancelToGrave(false)
+	if e:GetOwner():IsRelateToChain(ev) then
+		e:GetOwner():CancelToGrave(false)
+	end
 end
 function c86607583.spfilter(c,e,tp)
 	return c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -85,7 +87,7 @@ function c86607583.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(c86607583.eqlimit)
 			e1:SetLabelObject(tc)
 			c:RegisterEffect(e1)

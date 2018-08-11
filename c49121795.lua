@@ -59,7 +59,7 @@ function c49121795.daop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -71,7 +71,7 @@ function c49121795.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetPreviousControler()==tp and rp==1-tp and c:IsReason(REASON_DESTROY)
 end
 function c49121795.thfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:GetLevel()==4 and c:IsAbleToHand()
+	return c:IsRace(RACE_MACHINE) and c:IsLevel(4) and c:IsAbleToHand()
 end
 function c49121795.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c49121795.thfilter,tp,LOCATION_DECK,0,1,nil) end

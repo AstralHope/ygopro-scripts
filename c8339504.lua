@@ -21,11 +21,11 @@ function c8339504.cfilter(c,e,tp)
 	return rk>0 and Duel.IsExistingMatchingCard(c8339504.spfilter1,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
 end
 function c8339504.spfilter1(c,tc,e,tp)
-	return c:GetRank()==tc:GetRank() and c:IsRace(tc:GetRace()) and c:IsAttribute(tc:GetAttribute())
+	return c:IsRank(tc:GetRank()) and c:IsRace(tc:GetRace()) and c:IsAttribute(tc:GetAttribute())
 		and not c:IsCode(tc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c8339504.spfilter2(c,tc,e,tp)
-	return c:GetRank()==tc:GetPreviousRankOnField() and c:IsRace(tc:GetPreviousRaceOnField()) and c:IsAttribute(tc:GetPreviousAttributeOnField())
+	return c:IsRank(tc:GetPreviousRankOnField()) and c:IsRace(tc:GetPreviousRaceOnField()) and c:IsAttribute(tc:GetPreviousAttributeOnField())
 		and not c:IsCode(tc:GetPreviousCodeOnField()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c8339504.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -54,7 +54,7 @@ function c8339504.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(sc,Group.FromCards(c))
 		end
 		local fid=c:GetFieldID()
-		sc:RegisterFlagEffect(8339504,RESET_EVENT+0x1fe0000,0,1,fid)
+		sc:RegisterFlagEffect(8339504,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

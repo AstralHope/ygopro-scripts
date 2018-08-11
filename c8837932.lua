@@ -66,7 +66,7 @@ function c8837932.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
 		sc=sg:GetNext()
@@ -80,7 +80,7 @@ function c8837932.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		e2:SetCondition(c8837932.disable)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		oc:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_DISABLE)
@@ -96,7 +96,7 @@ function c8837932.dfilter(c,g)
 end
 function c8837932.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget()
-	if re:IsActiveType(TYPE_MONSTER) and rp~=tp
+	if re:IsActiveType(TYPE_MONSTER) and rp==1-tp
 		and Duel.IsExistingMatchingCard(c8837932.dfilter,tp,0,LOCATION_MZONE,1,nil,g) then
 		Duel.NegateEffect(ev)
 	end

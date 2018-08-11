@@ -14,7 +14,7 @@ function c97970833.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function c97970833.filter(c,tp)
-	return c:IsCode(34487429) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(34487429) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function c97970833.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c97970833.filter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -29,9 +29,11 @@ function c97970833.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+		local te=tc:GetActivateEffect()
+		te:UseCountLimit(tp,1,true)
 		if fc and fc:IsFaceup() and Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(tp,aux.Stringid(97970833,0)) then
 			Duel.Draw(1-tp,1,REASON_EFFECT)
 		end
-		Duel.RaiseEvent(tc,4179255,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
+		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 	end
 end

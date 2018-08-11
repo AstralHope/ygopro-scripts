@@ -37,8 +37,8 @@ function c61257789.initial_effect(c)
 	e4:SetDescription(aux.Stringid(61257789,2))
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetCode(EVENT_LEAVE_FIELD)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCode(EVENT_DESTROYED)
 	e4:SetCondition(c61257789.spcon)
 	e4:SetTarget(c61257789.sptg)
 	e4:SetOperation(c61257789.spop)
@@ -62,7 +62,7 @@ function c61257789.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	e:GetHandler():RegisterFlagEffect(61257789,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
+	e:GetHandler():RegisterFlagEffect(61257789,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 end
 function c61257789.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -76,7 +76,7 @@ function c61257789.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c61257789.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY)
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c61257789.spfilter(c,e,tp)
 	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

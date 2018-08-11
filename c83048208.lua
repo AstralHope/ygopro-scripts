@@ -35,7 +35,7 @@ function c83048208.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not c:IsStatus(STATUS_CONTINUOUS_POS) and c:IsPosition(POS_FACEUP_DEFENSE) and c:IsPreviousPosition(POS_FACEUP_ATTACK)
 end
 function c83048208.thfilter(c)
-	return c:IsRace(RACE_INSECT) and c:GetLevel()==3 and c:IsAbleToHand()
+	return c:IsRace(RACE_INSECT) and c:IsLevel(3) and c:IsAbleToHand()
 end
 function c83048208.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c83048208.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,14 +61,14 @@ function c83048208.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetOperation(c83048208.drop)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end

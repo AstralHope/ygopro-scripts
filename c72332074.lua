@@ -63,7 +63,7 @@ function c72332074.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c72332074.actfilter(c,tp)
-	return c:IsCode(10424147) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(10424147) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function c72332074.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c72332074.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -77,6 +77,8 @@ function c72332074.actop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 		end
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		Duel.RaiseEvent(tc,4179255,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
+		local te=tc:GetActivateEffect()
+		te:UseCountLimit(tp,1,true)
+		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 	end
 end

@@ -76,12 +76,12 @@ function c4779091.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c4779091.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function c4779091.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
+	return c:IsPreviousPosition(POS_FACEUP)
 end
 function c4779091.filter(c,e,tp)
 	return c:IsCode(31764700) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)

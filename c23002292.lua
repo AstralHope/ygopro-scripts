@@ -17,7 +17,7 @@ function c23002292.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c23002292.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function c23002292.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -49,10 +49,13 @@ function c23002292.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_TRIGGER)
-	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetTargetRange(0,LOCATION_SZONE+LOCATION_HAND)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(0,1)
+	e1:SetValue(c23002292.aclimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
+function c23002292.aclimit(e,re,tp)
+	return re:GetHandler():IsType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

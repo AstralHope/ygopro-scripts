@@ -24,7 +24,7 @@ function c9047460.initial_effect(c)
 end
 function c9047460.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
+	return c:IsPreviousPosition(POS_FACEUP)
 end
 function c9047460.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -60,7 +60,7 @@ function c9047460.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_TUNER_MATERIAL_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e1:SetTarget(c9047460.synlimit)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

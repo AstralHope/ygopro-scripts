@@ -12,8 +12,7 @@ function c652362.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c652362.filter(c,e,tp)
-	local lv=c:GetLevel()
-	return lv>0 and lv<=4 and c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c652362.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c652362.filter(chkc,e,tp) end
@@ -27,7 +26,7 @@ function c652362.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(652362,RESET_EVENT+0x1fe0000,0,1,fid)
+		tc:RegisterFlagEffect(652362,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

@@ -11,7 +11,7 @@ function c37192109.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE+TIMING_END_PHASE)
 	e1:SetCountLimit(1)
 	e1:SetTarget(c37192109.rmtg)
 	e1:SetOperation(c37192109.rmop)
@@ -53,9 +53,9 @@ function c37192109.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local oc=og:GetFirst()
 		while oc do
 			if oc:IsControler(tp) then
-				oc:RegisterFlagEffect(37192109,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,rct,fid)
+				oc:RegisterFlagEffect(37192109,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,rct,fid)
 			else
-				oc:RegisterFlagEffect(37192109,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,rct,fid)
+				oc:RegisterFlagEffect(37192109,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,rct,fid)
 			end
 			oc=og:GetNext()
 		end

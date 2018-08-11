@@ -38,7 +38,7 @@ function c56827051.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local ct=e:GetLabel()
 	local sel=nil
-	if c:GetLevel()==1 then
+	if c:IsLevel(1) then
 		sel=Duel.SelectOption(tp,aux.Stringid(56827051,2))
 	else
 		sel=Duel.SelectOption(tp,aux.Stringid(56827051,2),aux.Stringid(56827051,3))
@@ -50,7 +50,7 @@ function c56827051.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(ct)
-	e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end
 function c56827051.thcon(e,tp,eg,ep,ev,re,r,rp)

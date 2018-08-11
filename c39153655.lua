@@ -25,7 +25,7 @@ function c39153655.initial_effect(c)
 end
 function c39153655.filter(c)
 	local lv=c:GetLevel()
-	return c:IsFaceup() and c:IsSetCard(0xaf) and lv>0 and lv~=4
+	return c:IsFaceup() and c:IsSetCard(0xaf) and not c:IsLevel(4)
 end
 function c39153655.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c39153655.filter(chkc) end
@@ -37,13 +37,13 @@ function c39153655.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetLevel()~=4 then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsLevel(4) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(4)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_ATTACK)

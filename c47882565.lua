@@ -19,9 +19,10 @@ function c47882565.filter1(c,e,tp)
 	return rk>0 and c:IsFaceup() and c:IsSetCard(0xe5)
 		and Duel.IsExistingMatchingCard(c47882565.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+1)
 		and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
 end
 function c47882565.filter2(c,e,tp,mc,rk)
-	return c:GetRank()==rk and c:IsSetCard(0xe5) and mc:IsCanBeXyzMaterial(c)
+	return c:IsRank(rk) and c:IsSetCard(0xe5) and mc:IsCanBeXyzMaterial(c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c47882565.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -34,7 +35,7 @@ end
 function c47882565.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
+	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 or not aux.MustMaterialCheck(tc,tp,EFFECT_MUST_BE_XMATERIAL) then return end
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c47882565.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1)
@@ -53,14 +54,14 @@ function c47882565.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(c47882565.atkval)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		sc:RegisterEffect(e1,true)
 		if not sc:IsType(TYPE_EFFECT) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_ADD_TYPE)
 			e2:SetValue(TYPE_EFFECT)
-			e2:SetReset(RESET_EVENT+0x1fe0000)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e2,true)
 		end
 		sc:CompleteProcedure()

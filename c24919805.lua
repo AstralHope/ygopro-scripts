@@ -50,11 +50,11 @@ function c24919805.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1,24919805)
 	e1:SetTarget(c24919805.thtg)
 	e1:SetOperation(c24919805.thop)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end
 function c24919805.filter(c)
-	return c:GetLevel()==10 and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand()
+	return c:IsLevel(10) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand()
 end
 function c24919805.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c24919805.filter,tp,LOCATION_DECK,0,1,nil) end

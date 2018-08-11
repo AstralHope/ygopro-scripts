@@ -4,7 +4,7 @@ function c82768499.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(c82768499.target)
 	c:RegisterEffect(e1)
 end
@@ -12,7 +12,7 @@ function c82768499.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x99)
 end
 function c82768499.thfilter(c)
-	return c:IsSetCard(0x99) and c:GetLevel()==7 and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
+	return c:IsSetCard(0x99) and c:IsLevel(7) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
 end
 function c82768499.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

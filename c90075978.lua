@@ -5,7 +5,7 @@ function c90075978.initial_effect(c)
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(c90075978.target)
 	e1:SetOperation(c90075978.activate)
 	c:RegisterEffect(e1)
@@ -33,7 +33,7 @@ function c90075978.sfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_REPTILE) and c:IsCanTurnSet()
 end
 function c90075978.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_REPTILE) and c:GetLevel()>=7
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_REPTILE) and c:IsLevelAbove(7)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c90075978.setcon(e,tp,eg,ep,ev,re,r,rp)

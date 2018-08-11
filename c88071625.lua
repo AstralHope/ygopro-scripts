@@ -46,7 +46,7 @@ function c88071625.initial_effect(c)
 end
 function c88071625.otcon(e,c,minc)
 	if c==nil then return true end
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1)
+	return c:IsLevelAbove(7) and minc<=1 and Duel.CheckTribute(c,1)
 end
 function c88071625.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=Duel.SelectTribute(tp,c,1,1)
@@ -107,10 +107,10 @@ function c88071625.copyop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
-		c:CopyEffect(code,RESET_EVENT+0x1fe0000,1)
+		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD,1)
 	end
 end

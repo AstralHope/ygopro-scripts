@@ -9,7 +9,7 @@ function c21082832.initial_effect(c)
 	e1:SetOperation(c21082832.activate)
 	c:RegisterEffect(e1)
 end
-c21082832.card_code_list={46986414}
+c21082832.card_code_list={46986414,89631139}
 function c21082832.filter(c,e,tp,m1,m2,ft)
 	if not c:IsSetCard(0xcf) or bit.band(c:GetType(),0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
@@ -38,6 +38,7 @@ function c21082832.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.IsExistingMatchingCard(c21082832.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg1,mg2,ft)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE)
 end
 function c21082832.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg1=Duel.GetRitualMaterial(tp)

@@ -43,7 +43,7 @@ function c37440988.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c37440988.hspfilter(c,tp,sc)
-	return c:IsSetCard(0x2034) and c:GetLevel()==10 and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
+	return c:IsSetCard(0x2034) and c:IsLevel(10) and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
 end
 function c37440988.hspcon(e,c)
 	if c==nil then return true end
@@ -70,7 +70,7 @@ function c37440988.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

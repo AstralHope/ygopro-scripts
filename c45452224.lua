@@ -32,7 +32,7 @@ function c45452224.initial_effect(c)
 	e5:SetLabelObject(e6)
 end
 function c45452224.filter(c,e,tp)
-	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c45452224.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c45452224.filter(chkc,e,tp) end
@@ -49,7 +49,7 @@ function c45452224.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:SetCardTarget(tc)
 		e:GetLabelObject():SetLabelObject(tc)
 		c:CreateRelation(tc,RESET_EVENT+0x5020000)
-		tc:CreateRelation(c,RESET_EVENT+0x1fe0000)
+		tc:CreateRelation(c,RESET_EVENT+RESETS_STANDARD)
 	end
 end
 function c45452224.leave(e,tp,eg,ep,ev,re,r,rp)

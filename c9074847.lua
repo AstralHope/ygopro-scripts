@@ -14,13 +14,13 @@ function c9074847.confilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c9074847.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(c9074847.confilter,1,nil,tp)
+	return rp==1-tp and eg:IsExists(c9074847.confilter,1,nil,tp)
 end
 function c9074847.thfilter(c,tp)
 	return c:IsLocation(LOCATION_HAND) and c:IsControler(tp)
 end
 function c9074847.spfilter(c,e,tp)
-	return c:GetLevel()<=4 and c:IsSummonableCard() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSummonableCard() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9074847.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

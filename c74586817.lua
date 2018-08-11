@@ -10,7 +10,7 @@ function c74586817.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c74586817.rmcon)
 	e1:SetTarget(c74586817.rmtg)
@@ -61,9 +61,9 @@ function c74586817.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local oc=og:GetFirst()
 		while oc do
 			if oc:IsControler(tp) then
-				oc:RegisterFlagEffect(74586817,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1,fid)
+				oc:RegisterFlagEffect(74586817,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1,fid)
 			else
-				oc:RegisterFlagEffect(74586817,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,1,fid)
+				oc:RegisterFlagEffect(74586817,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,1,fid)
 			end
 			oc=og:GetNext()
 		end

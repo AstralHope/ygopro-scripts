@@ -19,7 +19,7 @@ function c3606728.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c3606728.lvfilter(c,lv)
-	return c:IsFaceup() and c:IsCode(26082117) and c:GetLevel()~=lv
+	return c:IsFaceup() and c:IsCode(26082117) and not c:IsLevel(lv)
 end
 function c3606728.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c3606728.lvfilter(chkc,e:GetHandler():GetLevel()) end
@@ -35,7 +35,7 @@ function c3606728.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -59,14 +59,14 @@ function c3606728.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(c3606728.atkcon)
 	e1:SetTarget(c3606728.atktg)
 	e1:SetOperation(c3606728.atkop)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
@@ -89,7 +89,7 @@ function c3606728.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

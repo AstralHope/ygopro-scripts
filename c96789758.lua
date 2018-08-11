@@ -2,6 +2,7 @@
 function c96789758.initial_effect(c)
 	--extra summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(96789758,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
@@ -33,7 +34,7 @@ function c96789758.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
 function c96789758.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return ep==tp end
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)

@@ -24,7 +24,7 @@ function c50078320.initial_effect(c)
 end
 function c50078320.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_ANNOUNCE)
-	return rp~=tp and ex and bit.band(cv,ANNOUNCE_CARD+ANNOUNCE_CARD_FILTER)~=0
+	return rp==1-tp and ex and bit.band(cv,ANNOUNCE_CARD+ANNOUNCE_CARD_FILTER)~=0
 end
 function c50078320.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -61,7 +61,7 @@ end
 function c50078320.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		tc:RegisterFlagEffect(50078320,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
+		tc:RegisterFlagEffect(50078320,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(50078320,1))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

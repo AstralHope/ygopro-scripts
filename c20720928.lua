@@ -33,7 +33,7 @@ function c20720928.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsSetCard(0x105)
 end
 function c20720928.ntop(e,tp,eg,ep,ev,re,r,rp,c)
-	c:RegisterFlagEffect(20720928,RESET_EVENT+0x1fe0000-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(20720928,1))
+	c:RegisterFlagEffect(20720928,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(20720928,1))
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -60,7 +60,7 @@ function c20720928.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function c20720928.chainop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x105) and re:IsActiveType(TYPE_MONSTER) then
+	if re:GetHandler():IsSetCard(0x105) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
 		Duel.SetChainLimit(c20720928.chainlm)
 	end
 end

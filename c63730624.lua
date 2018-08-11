@@ -54,11 +54,11 @@ function c63730624.initial_effect(c)
 end
 function c63730624.eqlimit(e,c)
 	return c:GetControler()==e:GetHandler():GetControler()
-		and (c:IsCode(2403771) or (c:IsSetCard(0x26) and c:GetLevel()>=4 and c:IsRace(RACE_MACHINE)))
+		and (c:IsCode(2403771) or (c:IsSetCard(0x26) and c:IsLevelAbove(4) and c:IsRace(RACE_MACHINE)))
 end
 function c63730624.filter(c,tp)
 	return c:IsControler(tp) and c:IsFaceup()
-		and (c:IsCode(2403771) or (c:IsSetCard(0x26) and c:GetLevel()>=4 and c:IsRace(RACE_MACHINE)))
+		and (c:IsCode(2403771) or (c:IsSetCard(0x26) and c:IsLevelAbove(4) and c:IsRace(RACE_MACHINE)))
 end
 function c63730624.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c63730624.filter(chkc,tp) end
@@ -86,12 +86,12 @@ function c63730624.sop2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 	d:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 	d:RegisterEffect(e2)
 end
 function c63730624.ocon1(e)

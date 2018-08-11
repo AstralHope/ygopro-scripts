@@ -25,12 +25,11 @@ function c62541668.initial_effect(c)
 end
 c62541668.xyz_number=77
 function c62541668.ovfilter(c)
-	local rk=c:GetRank()
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ) and (rk==10 or rk==11)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ) and c:IsRank(10,11)
 end
 function c62541668.xyzop(e,tp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(62541668,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(62541668,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function c62541668.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
@@ -60,7 +59,7 @@ function c62541668.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c62541668.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 		and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)

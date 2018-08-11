@@ -74,7 +74,7 @@ function c4998619.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e1)
 end
 function c4998619.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function c4998619.spfilter(c,e,tp)
 	return c:IsSetCard(0xe3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -85,7 +85,7 @@ function c4998619.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(c4998619.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	local ft=3
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	ft=math.min(ft,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	ft=math.min(ft,(Duel.GetLocationCount(tp,LOCATION_MZONE)))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c4998619.spfilter,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)

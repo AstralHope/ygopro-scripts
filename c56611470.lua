@@ -73,10 +73,10 @@ function c56611470.attg(e,c)
 	return not c:IsSetCard(0x97)
 end
 function c56611470.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function c56611470.cffilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==5 and not c:IsPublic()
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(5) and not c:IsPublic()
 end
 function c56611470.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c56611470.cffilter,tp,LOCATION_HAND,0,1,nil) end

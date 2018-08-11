@@ -17,7 +17,6 @@ function c85967160.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c85967160.adcon)
-	e2:SetTarget(c85967160.adtg)
 	e2:SetOperation(c85967160.adop)
 	c:RegisterEffect(e2)
 end
@@ -28,9 +27,6 @@ end
 function c85967160.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
-function c85967160.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return ep==tp end
-end
 function c85967160.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -38,7 +34,7 @@ function c85967160.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

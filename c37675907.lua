@@ -27,7 +27,7 @@ function c37675907.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c37675907.spcon)
 	e3:SetTarget(c37675907.sptg)
@@ -77,7 +77,7 @@ function c37675907.tgop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetValue(-lv)
 		end
-		e1:SetReset(RESET_EVENT+0x1ff0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

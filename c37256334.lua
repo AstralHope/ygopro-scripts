@@ -23,7 +23,7 @@ function c37256334.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c37256334.deffilter1(c,def)
-	return c:IsPosition(POS_FACEUP_DEFENSE) and c:GetDefense()~=def
+	return c:IsPosition(POS_FACEUP_DEFENSE) and not c:IsDefense(def)
 end
 function c37256334.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,LOCATION_MZONE,0,nil,POS_FACEUP_DEFENSE)
@@ -43,7 +43,7 @@ function c37256334.defop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(def)
 		tc:RegisterEffect(e1)
 	end

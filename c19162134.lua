@@ -112,20 +112,20 @@ function c19162134.tossop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if ep==tp then
 		for i=1,ev do
-			c:RegisterFlagEffect(19162135,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(19162135,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	else
 		for i=1,ev do
-			c:RegisterFlagEffect(19162136,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(19162136,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 	if c:GetFlagEffect(19162135)>=5 and c:GetFlagEffect(19162137)==0 then
 		c19162134.drop1(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(19162137,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(19162137,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 	if c:GetFlagEffect(19162136)>=5 and c:GetFlagEffect(19162138)==0 then
 		c19162134.drop2(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(19162138,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(19162138,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function c19162134.diceop(e,tp,eg,ep,ev,re,r,rp)
@@ -134,31 +134,31 @@ function c19162134.diceop(e,tp,eg,ep,ev,re,r,rp)
 	local ct2=bit.rshift(ev,16)
 	if ep==tp then
 		for i=1,ct1 do
-			c:RegisterFlagEffect(19162135,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(19162135,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		for i=1,ct2 do
-			c:RegisterFlagEffect(19162136,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(19162136,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	else
 		for i=1,ct2 do
-			c:RegisterFlagEffect(19162135,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(19162135,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		for i=1,ct1 do
-			c:RegisterFlagEffect(19162136,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(19162136,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 	if c:GetFlagEffect(19162135)>=5 and c:GetFlagEffect(19162137)==0 then
 		c19162134.drop1(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(19162137,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(19162137,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 	if c:GetFlagEffect(19162136)>=5 and c:GetFlagEffect(19162138)==0 then
 		c19162134.drop2(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(19162138,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(19162138,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function c19162134.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetLP(tp)<=500
+	return ep==tp and Duel.GetLP(tp)<=500 and Duel.GetLP(tp)>0
 end
 function c19162134.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.GetLP(1-tp)<=500
+	return ep==1-tp and Duel.GetLP(1-tp)<=500 and Duel.GetLP(1-tp)>0
 end

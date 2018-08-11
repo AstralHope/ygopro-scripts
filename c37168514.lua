@@ -10,8 +10,7 @@ function c37168514.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c37168514.filter(c)
-	local lv=c:GetLevel()
-	return c:IsFaceup() and c:IsRace(RACE_ROCK) and lv>0 and lv~=3
+	return c:IsFaceup() and c:IsRace(RACE_ROCK) and not c:IsLevel(3)
 end
 function c37168514.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c37168514.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -24,7 +23,7 @@ function c37168514.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(3)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end

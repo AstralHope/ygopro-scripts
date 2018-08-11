@@ -37,7 +37,7 @@ end
 function c81907872.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(81907872)==0 end
-	c:RegisterFlagEffect(81907872,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(81907872,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function c81907872.posop(e,tp,eg,ep,ev,re,r,rp)
@@ -47,7 +47,7 @@ function c81907872.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c81907872.cfilter(c,tp)
-	return c:IsControler(tp) and c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()~=tp
+	return c:IsControler(tp) and c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp
 		and c:IsSetCard(0x8d) and c:IsType(TYPE_MONSTER) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and c==Duel.GetAttackTarget()))
 end
 function c81907872.spcon(e,tp,eg,ep,ev,re,r,rp)

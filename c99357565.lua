@@ -39,7 +39,7 @@ function c99357565.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_ADD_SETCODE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(0xc008)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -50,7 +50,7 @@ function c99357565.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	local ct=2
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
-	ct=math.min(ct,Duel.GetLocationCount(tp,LOCATION_MZONE),
+	ct=math.min(ct,(Duel.GetLocationCount(tp,LOCATION_MZONE)),
 		Duel.GetMatchingGroupCount(c99357565.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,nil,e,tp))
 	local cg=Duel.DiscardHand(tp,Card.IsDiscardable,1,ct,REASON_COST+REASON_DISCARD,nil)
 	e:SetLabel(cg)

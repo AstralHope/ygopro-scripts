@@ -24,10 +24,10 @@ function c7817703.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c7817703.eqlimit(e,c)
-	return c:IsSetCard(0x26) and c:GetLevel()==3
+	return c:IsSetCard(0x26) and c:IsLevel(3)
 end
 function c7817703.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26) and c:GetLevel()==3
+	return c:IsFaceup() and c:IsSetCard(0x26) and c:IsLevel(3)
 end
 function c7817703.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c7817703.filter(chkc) end
@@ -50,7 +50,7 @@ function c7817703.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(c7817703.descon)
 		e1:SetTarget(c7817703.destg)
 		e1:SetOperation(c7817703.desop)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

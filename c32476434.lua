@@ -12,7 +12,7 @@ function c32476434.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c32476434.filter(c)
-	return c:IsFaceup() and c:GetLevel()==3 and c:IsRace(RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsLevel(3) and c:IsRace(RACE_BEASTWARRIOR)
 end
 function c32476434.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c32476434.filter(chkc) and chkc~=e:GetHandler() end
@@ -30,7 +30,7 @@ function c32476434.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		tc:RegisterEffect(e2)

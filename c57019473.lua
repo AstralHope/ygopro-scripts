@@ -12,7 +12,7 @@ function c57019473.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c57019473.filter(c)
-	return c:IsRace(RACE_THUNDER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==4
+	return c:IsRace(RACE_THUNDER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(4)
 		and c:GetCode()~=57019473 and c:IsAttackBelow(1600) and c:IsAbleToRemove()
 end
 function c57019473.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -31,7 +31,7 @@ function c57019473.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_REMOVED)
 		e1:SetCountLimit(1)
 		e1:SetOperation(c57019473.thop)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -53,7 +53,7 @@ function c8491961.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300*oc)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -73,7 +73,7 @@ function c8491961.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c8491961.thfilter(c)
-	return c:GetLevel()==1 and c:IsRace(RACE_WINDBEAST) and c:IsAbleToHand()
+	return c:IsLevel(1) and c:IsRace(RACE_WINDBEAST) and c:IsAbleToHand()
 end
 function c8491961.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c8491961.thfilter,tp,LOCATION_DECK,0,1,nil) end

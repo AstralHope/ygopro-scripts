@@ -36,7 +36,7 @@ function c80476891.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -45,7 +45,7 @@ function c80476891.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c80476891.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsType(TYPE_DUAL) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(80476891)==0
+		and c:IsType(TYPE_DUAL) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c:GetFlagEffect(80476891)==0
 end
 function c80476891.desfilter(c,e,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
@@ -66,7 +66,7 @@ function c80476891.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local tg=Duel.SelectMatchingCard(tp,c80476891.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e,tp)
 		Duel.SetTargetCard(tg)
-		tg:GetFirst():RegisterFlagEffect(80476891,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
+		tg:GetFirst():RegisterFlagEffect(80476891,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
 		tg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
 	else return false end

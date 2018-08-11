@@ -18,13 +18,13 @@ function c86937530.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetHintTiming(0,0x1e0)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetTarget(c86937530.thtg)
 	e2:SetOperation(c86937530.thop)
 	c:RegisterEffect(e2)
 end
 function c86937530.filter(c)
-	return c:GetAttack()==1850 and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
+	return c:IsAttack(1850) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
 end
 function c86937530.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c86937530.filter,tp,LOCATION_DECK,0,1,nil) end

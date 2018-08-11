@@ -36,13 +36,13 @@ function c47126872.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and e:GetHandler():IsRelateToEffect(e) then
 			e:SetLabelObject(tc)
-			tc:RegisterFlagEffect(47126872,RESET_EVENT+0x1fe0000,0,1)
+			tc:RegisterFlagEffect(47126872,RESET_EVENT+RESETS_STANDARD,0,1)
 		end
 	end
 end
 function c47126872.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject():GetLabelObject()
-	return tc and tc:GetFlagEffect(47126872)~=0 and not e:GetHandler():IsLocation(LOCATION_DECK)
+	return tc and tc:GetFlagEffect(47126872)~=0
 end
 function c47126872.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

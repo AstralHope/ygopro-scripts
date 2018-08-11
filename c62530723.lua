@@ -50,7 +50,7 @@ function c62530723.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -58,15 +58,15 @@ function c62530723.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c62530723.cfilter(c,seq2)
-	local seq1=c:GetSequence()
-	return c:IsFaceup() and c:IsSetCard(0x10c)
-		and (seq1==4-seq2 or (seq2==5 and seq1==3) or (seq2==6 and seq1==1))
+	local seq1=aux.MZoneSequence(c:GetSequence())
+	return c:IsFaceup() and c:IsSetCard(0x10c) and seq1==4-seq2
 end
 function c62530723.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
-	return rp~=tp and re:IsActiveType(TYPE_SPELL) and loc==LOCATION_SZONE
+	return rp==1-tp and re:IsActiveType(TYPE_SPELL) and loc&LOCATION_SZONE==LOCATION_SZONE
 		and Duel.IsExistingMatchingCard(c62530723.cfilter,tp,LOCATION_MZONE,0,1,nil,seq)
 end
 function c62530723.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,62530723)
 	Duel.NegateEffect(ev)
 end

@@ -76,12 +76,12 @@ end
 function c41578483.equip_monster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end
 	--Add Equip limit
-	tc:RegisterFlagEffect(41578483,RESET_EVENT+0x1fe0000,0,0)
+	tc:RegisterFlagEffect(41578483,RESET_EVENT+RESETS_STANDARD,0,0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(c41578483.eqlimit)
 	tc:RegisterEffect(e1)
 end
@@ -91,7 +91,7 @@ function c41578483.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			c41578483.equip_monster(c,tp,tc)
-		else Duel.SendtoGrave(tc,REASON_EFFECT) end
+		else Duel.SendtoGrave(tc,REASON_RULE) end
 	end
 end
 function c41578483.atkval(e,c)
@@ -129,7 +129,7 @@ function c41578483.distg(e,c)
 	if code2 then code=code2 end
 	local res=g:IsExists(Card.IsCode,1,nil,code)
 	if res and code2==nil and code~=c:GetOriginalCode() then
-		c:RegisterFlagEffect(41578484,RESET_EVENT+0x1fe0000,0,0,code)
+		c:RegisterFlagEffect(41578484,RESET_EVENT+RESETS_STANDARD,0,0,code)
 	end
 	return res
 end

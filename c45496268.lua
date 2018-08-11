@@ -45,7 +45,7 @@ function c45496268.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c45496268.lvfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:GetLevel()~=8
+	return c:IsFaceup() and (c:IsSetCard(0x85) or c:IsCode(71071546)) and not c:IsLevel(8)
 end
 function c45496268.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c45496268.lvfilter(chkc) end
@@ -61,7 +61,7 @@ function c45496268.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(8)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

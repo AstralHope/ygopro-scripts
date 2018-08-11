@@ -25,7 +25,7 @@ function c59123937.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c59123937.spfilter(c,e,tp)
-	return c:GetLevel()==7 and c:IsSetCard(0x10af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(7) and c:IsSetCard(0x10af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c59123937.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -50,7 +50,7 @@ function c59123937.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1,59123938)
 	e1:SetTarget(c59123937.target)
 	e1:SetOperation(c59123937.operation)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end
 function c59123937.filter0(c)

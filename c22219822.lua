@@ -41,7 +41,7 @@ function c22219822.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x47e0000)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
@@ -63,6 +63,7 @@ function c22219822.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return tg:IsExists(Card.IsCanBeEffectTarget,1,nil,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=tg:FilterSelect(tp,Card.IsCanBeEffectTarget,1,1,nil,e)
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c22219822.desop(e,tp,eg,ep,ev,re,r,rp)

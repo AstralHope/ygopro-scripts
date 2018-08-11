@@ -43,6 +43,6 @@ function c39765958.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
 function c39765958.desop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c39765958.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+	local sg=Duel.GetMatchingGroup(c39765958.dfilter,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
 	Duel.Destroy(sg,REASON_EFFECT)
 end

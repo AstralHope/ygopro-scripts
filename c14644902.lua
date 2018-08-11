@@ -22,7 +22,7 @@ function c14644902.filter(c,e,tp)
 end
 function c14644902.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rg=Duel.SelectReleaseGroup(tp,c14644902.rfilter,1,1,c,e,tp)
+	local rg=Duel.SelectReleaseGroup(tp,c14644902.rfilter,1,1,aux.ExceptThisCard(e),e,tp)
 	if Duel.Release(rg,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c14644902.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
@@ -34,7 +34,7 @@ function c14644902.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
 			e1:SetCondition(c14644902.descon)
 			e1:SetOperation(c14644902.desop)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			e1:SetCountLimit(1)
 			sg:GetFirst():RegisterEffect(e1)
 		end

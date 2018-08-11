@@ -57,7 +57,7 @@ function c74530899.initial_effect(c)
 end
 function c74530899.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4
+	return minc==0 and c:IsLevelAbove(5)
 		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
@@ -74,7 +74,7 @@ function c74530899.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetCount()*300)
 end
 function c74530899.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
 	if g:GetCount()==0 then return end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()

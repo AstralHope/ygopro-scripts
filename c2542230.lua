@@ -39,7 +39,9 @@ end
 function c2542230.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return end
-	e:GetOwner():CancelToGrave(false)
+	if e:GetOwner():IsRelateToChain(ev) then
+		e:GetOwner():CancelToGrave(false)
+	end
 end
 function c2542230.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
@@ -64,7 +66,7 @@ function c2542230.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(c2542230.eqlimit)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -72,7 +74,7 @@ function c2542230.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_SZONE)
 		e2:SetTargetRange(0,LOCATION_MZONE)
 		e2:SetCondition(c2542230.discon)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	else
 		c:CancelToGrave(false)
@@ -99,7 +101,7 @@ function c2542230.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(c2542230.spcon)
 	e1:SetTarget(c2542230.sptg)
 	e1:SetOperation(c2542230.spop)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end
 function c2542230.spcon(e,tp,eg,ep,ev,re,r,rp)

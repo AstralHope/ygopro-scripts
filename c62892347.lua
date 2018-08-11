@@ -53,7 +53,7 @@ function c62892347.arcanareg(c,coin)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e1:SetTarget(c62892347.distg)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--disable effect
 	local e2=Effect.CreateEffect(c)
@@ -61,7 +61,7 @@ function c62892347.arcanareg(c,coin)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(c62892347.disop)
-	e2:SetReset(RESET_EVENT+0x1fe0000)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	--self destroy
 	local e3=Effect.CreateEffect(c)
@@ -70,9 +70,9 @@ function c62892347.arcanareg(c,coin)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e3:SetTarget(c62892347.distg)
-	e3:SetReset(RESET_EVENT+0x1fe0000)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function c62892347.distg(e,c)
 	local ec=e:GetHandler()
@@ -86,7 +86,7 @@ function c62892347.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local val=ec:GetFlagEffectLabel(36690018)
-	if (val==1 and rp~=ec:GetControler()) or (val==0 and rp==ec:GetControler()) then return end
+	if (val==1 and rp==1-ec:GetControler()) or (val==0 and rp==ec:GetControler()) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsContains(ec) then return end
 	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then

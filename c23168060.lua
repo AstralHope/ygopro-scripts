@@ -11,7 +11,7 @@ function c23168060.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c23168060.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLevel()~=3
+	return not e:GetHandler():IsLevel(3)
 end
 function c23168060.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -21,7 +21,7 @@ function c23168060.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(3)
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

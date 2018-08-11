@@ -45,7 +45,7 @@ function c60681103.rmop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk*100)
-			e1:SetReset(RESET_EVENT+0x1ff0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 			c:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -54,7 +54,7 @@ function c60681103.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60681103.filter(c,e,tp)
-	return c:IsRace(RACE_DRAGON) and (c:GetLevel()==7 or c:GetLevel()==8) and not c:IsCode(60681103)
+	return c:IsRace(RACE_DRAGON) and c:IsLevel(7,8) and not c:IsCode(60681103)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60681103.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

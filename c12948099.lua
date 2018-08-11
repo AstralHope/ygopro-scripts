@@ -37,7 +37,7 @@ function c12948099.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function c12948099.filter(c)
-	return c:IsType(TYPE_XYZ) and c:GetRank()==4 and c:IsAbleToExtra()
+	return c:IsType(TYPE_XYZ) and c:IsRank(4) and c:IsAbleToExtra()
 end
 function c12948099.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12948099.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -78,14 +78,14 @@ function c12948099.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(c12948099.drcon2)
 	e1:SetTarget(c12948099.drtg)
 	e1:SetOperation(c12948099.drop)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end

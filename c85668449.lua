@@ -8,6 +8,7 @@ function c85668449.initial_effect(c)
 	c:RegisterEffect(e1)
 	--extra summon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(85668449,1))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,LOCATION_HAND+LOCATION_MZONE)
@@ -45,7 +46,7 @@ function c85668449.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c85668449.esop(e,tp,eg,ep,ev,re,r,rp,c)
-	c:RegisterFlagEffect(85668449,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(85668449,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function c85668449.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetFlagEffect(85668449)~=0

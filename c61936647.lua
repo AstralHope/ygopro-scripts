@@ -84,7 +84,7 @@ function c61936647.ctg(e,c)
 	return e:GetHandler():IsHasCardTarget(c)
 end
 function c61936647.repfilter(c,e)
-	return c61936647.ctg(e,c) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c61936647.ctg(e,c) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function c61936647.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -126,7 +126,7 @@ function c61936647.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x47e0000)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)
 	end

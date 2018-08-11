@@ -17,7 +17,7 @@ function c20032555.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c20032555.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c20032555.cfilter,1,1,REASON_COST+REASON_DISCARD)
 	local opt=0
-	if e:GetHandler():GetLevel()==8 then
+	if e:GetHandler():IsLevel(8) then
 		opt=Duel.SelectOption(tp,aux.Stringid(20032555,1))
 	else
 		opt=Duel.SelectOption(tp,aux.Stringid(20032555,1),aux.Stringid(20032555,2))
@@ -38,7 +38,7 @@ function c20032555.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(8)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

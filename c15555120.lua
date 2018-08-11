@@ -23,8 +23,7 @@ function c15555120.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g:GetFirst():GetLevel())
 end
 function c15555120.filter(c,lv)
-	local clv=c:GetLevel()
-	return c:IsFaceup() and clv>0 and clv~=lv and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and not c:IsLevel(lv) and c:IsType(TYPE_SYNCHRO)
 end
 function c15555120.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c15555120.filter(chkc,e:GetLabel()) end
@@ -35,18 +34,18 @@ end
 function c15555120.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetLevel()~=lv then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsLevel(lv) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(lv*500)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

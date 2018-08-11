@@ -37,7 +37,9 @@ end
 function c68540058.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return end
-	e:GetOwner():CancelToGrave(false)
+	if e:GetOwner():IsRelateToChain(ev) then
+		e:GetOwner():CancelToGrave(false)
+	end
 end
 function c68540058.filter(c)
 	return c:IsFaceup()
@@ -62,7 +64,7 @@ function c68540058.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -73,7 +75,7 @@ function c68540058.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+0x1fe0000)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e3)
 		--atk up
 		local e4=Effect.CreateEffect(c)
@@ -81,7 +83,7 @@ function c68540058.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetCondition(c68540058.atkcon)
 		e4:SetValue(c68540058.atkval)
-		e4:SetReset(RESET_EVENT+0x1fe0000)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e4)
 	else
 		c:CancelToGrave(false)

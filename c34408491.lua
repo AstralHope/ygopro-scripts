@@ -26,7 +26,7 @@ function c34408491.initial_effect(c)
 end
 function c34408491.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then return false end
-	if bit.band(r,REASON_EFFECT)~=0 then return rp~=tp end
+	if bit.band(r,REASON_EFFECT)~=0 then return rp==1-tp end
 	return e:GetHandler():IsRelateToBattle()
 end
 function c34408491.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +36,7 @@ function c34408491.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ev)
-		e1:SetReset(RESET_EVENT+0x1ff0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

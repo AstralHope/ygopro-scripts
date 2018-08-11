@@ -21,8 +21,7 @@ function c21620076.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c21620076.lvfilter(c)
-	local lv=c:GetLevel()
-	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and lv>0 and lv~=2
+	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and not c:IsLevel(2)
 end
 function c21620076.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c21620076.lvfilter(chkc) end
@@ -40,13 +39,13 @@ function c21620076.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(2)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 			e2:SetValue(c21620076.synlimit)
-			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
 		end
 		tc=g:GetNext()

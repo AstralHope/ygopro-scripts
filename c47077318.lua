@@ -24,7 +24,7 @@ function c47077318.initial_effect(c)
 end
 function c47077318.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()~=tp
+	return c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp
 		and c:GetPreviousControler()==tp
 end
 function c47077318.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -57,7 +57,7 @@ function c47077318.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

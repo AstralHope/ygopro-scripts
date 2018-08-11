@@ -15,7 +15,7 @@ function c94380860.initial_effect(c)
 	e1:SetCost(c94380860.cost)
 	e1:SetTarget(c94380860.target)
 	e1:SetOperation(c94380860.operation)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 c94380860.xyz_number=103
@@ -24,7 +24,7 @@ function c94380860.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c94380860.filter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:GetAttack()~=c:GetBaseAttack()
+	return c:IsPosition(POS_FACEUP_ATTACK) and not c:IsAttack(c:GetBaseAttack())
 end
 function c94380860.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c94380860.filter(chkc) end

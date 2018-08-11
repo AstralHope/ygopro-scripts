@@ -34,7 +34,7 @@ end
 function c57477163.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE)
-		or rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+		or rp==1-tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
 end
 function c57477163.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -48,7 +48,7 @@ function c57477163.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(800)
-		e1:SetReset(RESET_EVENT+0x1ff0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 		Duel.SpecialSummonComplete()
 	end

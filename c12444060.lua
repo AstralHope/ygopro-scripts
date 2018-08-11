@@ -6,7 +6,7 @@ function c12444060.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x11e8)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START+TIMING_END_PHASE)
 	e1:SetCountLimit(1,12444060+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(c12444060.cost)
 	e1:SetTarget(c12444060.target)
@@ -51,7 +51,7 @@ function c12444060.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12444060.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function c12444060.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

@@ -41,7 +41,7 @@ function c35058857.spcon(e,c)
 		and Duel.IsExistingMatchingCard(c35058857.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c35058857.lvfilter(c,lv)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:GetLevel()>0 and c:GetLevel()~=lv
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and not c:IsLevel(lv)
 end
 function c35058857.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lv=e:GetHandler():GetLevel()
@@ -58,7 +58,7 @@ function c35058857.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(c)

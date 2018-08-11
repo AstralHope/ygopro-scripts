@@ -64,7 +64,7 @@ function c29432356.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(tc:GetLeftScale())
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)
@@ -109,7 +109,7 @@ function c29432356.penop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetDescription(aux.Stringid(29432356,2))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_SPSUMMON_PROC_G)
-	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_BOTH_SIDE)
+	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCountLimit(1,29432356)
 	e3:SetCondition(c29432356.pencon2)
@@ -130,19 +130,12 @@ end
 function c29432356.eftg2(e,c)
 	local rpz=Duel.GetFieldCard(1-e:GetHandlerPlayer(),LOCATION_PZONE,1)
 	return c==Duel.GetFieldCard(1-e:GetHandlerPlayer(),LOCATION_PZONE,0)
+		and rpz
 		and c:GetFlagEffectLabel(31531170)==rpz:GetFieldID()
 		and rpz:GetFlagEffectLabel(31531170)==c:GetFieldID()
 end
 function c29432356.penfilter(c,e,tp,lscale,rscale)
-	local lv=0
-	if c.pendulum_level then
-		lv=c.pendulum_level
-	else
-		lv=c:GetLevel()
-	end
-	return (c:IsLocation(LOCATION_HAND) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM)))
-		and lv>lscale and lv<rscale and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,false,false)
-		and not c:IsForbidden() and c:IsSetCard(0xc4)
+	return c:IsSetCard(0xc4) and aux.PConditionFilter(c,e,tp,lscale,rscale)
 end
 function c29432356.pencon1(e,c,og)
 	if c==nil then return true end

@@ -32,7 +32,9 @@ end
 function c30155789.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return end
-	e:GetOwner():CancelToGrave(false)
+	if e:GetOwner():IsRelateToChain(ev) then
+		e:GetOwner():CancelToGrave(false)
+	end
 end
 function c30155789.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -55,7 +57,7 @@ function c30155789.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_DAMAGE)
 		e1:SetRange(LOCATION_SZONE)
 		e1:SetOperation(c30155789.damop)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Atkup
 		local e2=Effect.CreateEffect(c)
@@ -63,7 +65,7 @@ function c30155789.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(1000)
 		e2:SetCondition(c30155789.atkcon)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
@@ -72,7 +74,7 @@ function c30155789.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(c30155789.eqlimit)
 		e3:SetLabelObject(tc)
-		e3:SetReset(RESET_EVENT+0x1fe0000)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
@@ -86,6 +88,6 @@ function c30155789.atkcon(e)
 end
 function c30155789.damop(e,tp,eg,ep,ev,re,r,rp)
 	if bit.band(r,REASON_EFFECT)~=0 and ep~=tp and rp==tp then
-		e:GetHandler():RegisterFlagEffect(30155789,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(30155789,RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,0,1)
 	end
 end

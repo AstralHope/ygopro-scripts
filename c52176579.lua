@@ -50,7 +50,7 @@ function c52176579.lvfilter(c,tp)
 	return lv>0 and c:IsFaceup() and c:IsSetCard(0xea) and Duel.IsExistingMatchingCard(c52176579.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function c52176579.tgfilter(c,lv)
-	return c:IsSetCard(0xea) and c:GetLevel()~=lv and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0xea) and not c:IsLevel(lv) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c52176579.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c52176579.lvfilter(chkc,tp) end
@@ -70,7 +70,7 @@ function c52176579.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(gc:GetLevel())
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

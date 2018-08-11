@@ -19,7 +19,7 @@ function c58787301.cfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(c58787301.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel())
 end
 function c58787301.spfilter(c,e,tp,lv)
-	return c:IsSetCard(0xef) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0xef) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c58787301.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -27,7 +27,7 @@ function c58787301.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c58787301.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),2)
+	local ft=math.min((Duel.GetLocationCount(tp,LOCATION_MZONE)),2)
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)

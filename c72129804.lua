@@ -38,11 +38,11 @@ function c72129804.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	local tc=tg:GetFirst()
 	while tc do
-		if tc:AddCounter(0x1041,1) and tc:GetLevel()>1 then
+		if tc:AddCounter(0x1041,1) and tc:IsLevelAbove(2) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetCondition(c72129804.lvcon)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)

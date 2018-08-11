@@ -20,6 +20,6 @@ function c77428945.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 end
 function c77428945.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c77428945.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+	local g=Duel.GetMatchingGroup(c77428945.filter,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
 	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 end

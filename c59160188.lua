@@ -29,6 +29,7 @@ function c59160188.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_RELEASE)
 	e4:SetRange(LOCATION_FZONE)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetOperation(c59160188.regop)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
@@ -42,15 +43,17 @@ function c59160188.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c59160188.relval(e,re,r,rp)
-	return bit.band(r,REASON_COST)~=0
+	return re:IsActivated() and bit.band(r,REASON_COST)~=0
 end
 function c59160188.regop(e,tp,eg,ep,ev,re,r,rp)
+	local mct=eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	if mct==0 then return end
 	local c=e:GetHandler()
 	local ct=c:GetFlagEffectLabel(59160188)
 	if ct then
-		c:SetFlagEffectLabel(59160188,ct+eg:GetCount())
+		c:SetFlagEffectLabel(59160188,ct+mct)
 	else
-		c:RegisterFlagEffect(59160188,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1,eg:GetCount())
+		c:RegisterFlagEffect(59160188,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,mct)
 	end
 end
 function c59160188.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

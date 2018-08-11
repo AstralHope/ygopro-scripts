@@ -1,7 +1,7 @@
 --神海竜ギシルノドン
 function c76891401.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,aux.NonTuner(c76891401.synfilter),1,1)
+	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsLevel,3),1,1)
 	c:EnableReviveLimit()
 	--atk change
 	local e1=Effect.CreateEffect(c)
@@ -14,9 +14,6 @@ function c76891401.initial_effect(c)
 	e1:SetOperation(c76891401.atkop)
 	c:RegisterEffect(e1)
 end
-function c76891401.synfilter(c)
-	return c:GetLevel()==3
-end
 function c76891401.filter(c)
 	return c:IsLevelBelow(3) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
@@ -28,7 +25,7 @@ function c76891401.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(3000)
 	c:RegisterEffect(e1)
 end

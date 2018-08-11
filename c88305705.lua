@@ -50,7 +50,7 @@ function c88305705.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
@@ -68,7 +68,7 @@ function c88305705.ftarget(e,c)
 end
 function c88305705.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetAttack()==0
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsAttack(0)
 end
 function c88305705.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

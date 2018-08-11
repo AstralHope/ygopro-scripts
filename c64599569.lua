@@ -22,13 +22,14 @@ function c64599569.initial_effect(c)
 	e4:SetOperation(c64599569.tgop)
 	c:RegisterEffect(e4)
 end
+c64599569.material_setcode=0x1093
 function c64599569.sucop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(c:GetMaterialCount()*800)
-	e1:SetReset(RESET_EVENT+0x1ff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -39,6 +40,6 @@ function c64599569.sucop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e3)
 end
 function c64599569.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,0,e:GetHandler())
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,0,aux.ExceptThisCard(e))
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end

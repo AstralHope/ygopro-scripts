@@ -43,7 +43,7 @@ function c6283472.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c6283472.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(6283472,RESET_EVENT+0x1fe0000,0,1)
+	e:GetHandler():RegisterFlagEffect(6283472,RESET_EVENT+RESETS_STANDARD,0,1)
 end
 function c6283472.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -51,8 +51,8 @@ end
 function c6283472.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.HintSelection(Group.FromCards(c))
-	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(6283472,0)) then
-		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
+	if Duel.CheckReleaseGroup(tp,nil,1,c) and Duel.SelectYesNo(tp,aux.Stringid(6283472,0)) then
+		local g=Duel.SelectReleaseGroup(tp,nil,1,1,c)
 		Duel.Release(g,REASON_COST)
 	else Duel.Destroy(c,REASON_COST) end
 end

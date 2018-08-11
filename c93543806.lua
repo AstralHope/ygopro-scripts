@@ -31,7 +31,7 @@ function c93543806.splimit(e,c)
 	return not c:IsSetCard(0x70)
 end
 function c93543806.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x70) and c:GetLevel()~=6
+	return c:IsFaceup() and c:IsSetCard(0x70) and not c:IsLevel(6)
 end
 function c93543806.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c93543806.filter(chkc) end
@@ -47,7 +47,7 @@ function c93543806.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(6)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

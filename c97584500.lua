@@ -17,6 +17,7 @@ function c97584500.initial_effect(c)
 	c:RegisterEffect(e2)
 	--extra summon
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(97584500,1))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
@@ -45,7 +46,7 @@ end
 function c97584500.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(97584500)==0 end
-	c:RegisterFlagEffect(97584500,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(97584500,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function c97584500.posop(e,tp,eg,ep,ev,re,r,rp)

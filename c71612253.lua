@@ -37,7 +37,7 @@ function c71612253.initial_effect(c)
 	end
 end
 function c71612253.ovfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x10af) and c:GetRank()==4
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x10af) and c:IsRank(4)
 end
 function c71612253.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if bit.band(r,REASON_EFFECT)~=0 then
@@ -65,7 +65,7 @@ function c71612253.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

@@ -37,10 +37,8 @@ function c92970404.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 end
 function c92970404.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	if g:GetCount()>0 then
-		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
-	end
+	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
+	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 end
 function c92970404.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsFacedown() and c:IsControler(tp)
@@ -62,7 +60,7 @@ end
 function c92970404.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(92970404)==0 end
-	c:RegisterFlagEffect(92970404,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(92970404,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function c92970404.posop(e,tp,eg,ep,ev,re,r,rp)

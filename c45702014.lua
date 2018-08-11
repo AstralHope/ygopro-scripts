@@ -9,7 +9,7 @@ function c45702014.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(c45702014.setcost)
 	e1:SetTarget(c45702014.settg)
 	e1:SetOperation(c45702014.setop)
@@ -45,7 +45,7 @@ function c45702014.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 			fc=fg:Select(tp,1,1,nil)
 		end
 		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(61557074,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
+		fc:RegisterFlagEffect(61557074,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 	end
 	Duel.SendtoGrave(tc,REASON_COST)
 end
@@ -78,7 +78,7 @@ function c45702014.attop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

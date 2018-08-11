@@ -23,7 +23,7 @@ function c49374988.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c49374988.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
+	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()==1-tp
 		and e:GetHandler():GetPreviousControler()==tp
 end
 function c49374988.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +64,7 @@ function c49374988.posop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 			tc:RegisterEffect(e1)
 			tc=g:GetNext()
 		end

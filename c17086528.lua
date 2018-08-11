@@ -44,7 +44,7 @@ function c17086528.rkfilter(c,tp)
 		and Duel.IsExistingTarget(c17086528.lvfilter,tp,LOCATION_MZONE,0,1,c,c:GetRank())
 end
 function c17086528.lvfilter(c,rk)
-	return c:IsFaceup() and c:IsLevelAbove(5) and c:GetLevel()~=rk
+	return c:IsFaceup() and c:IsLevelAbove(5) and not c:IsLevel(rk)
 end
 function c17086528.rktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -66,7 +66,7 @@ function c17086528.rkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RANK)
 		e1:SetValue(lc:GetLevel())
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -75,7 +75,7 @@ function c17086528.slcon(e)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
 end
 function c17086528.atkfilter(c,atk)
-	return c:IsFaceup() and c:GetAttack()~=atk
+	return c:IsFaceup() and not c:IsAttack(atk)
 end
 function c17086528.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -94,7 +94,7 @@ function c17086528.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

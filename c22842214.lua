@@ -63,21 +63,19 @@ function c22842214.eqop(e,tp,eg,ep,ev,re,r,rp)
 			local tc=tg:GetFirst()
 			while tc do
 				Duel.Equip(tp,tc,c,false,true)
-				tc:RegisterFlagEffect(22842214,RESET_EVENT+0x1fe0000,0,0)
+				tc:RegisterFlagEffect(22842214,RESET_EVENT+RESETS_STANDARD,0,0)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_EQUIP_LIMIT)
 				e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
-				e1:SetReset(RESET_EVENT+0x1fe0000)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				e1:SetValue(c22842214.eqlimit)
 				tc:RegisterEffect(e1)
 				tc=tg:GetNext()
 			end
 			Duel.EquipComplete()
 		end
-	else
-		Duel.SendtoGrave(tg0,REASON_EFFECT)
-	end
+	else Duel.SendtoGrave(tg0,REASON_RULE) end
 end
 function c22842214.eqfilter(c,ec)
 	return c:GetFlagEffect(22842214)~=0 and c:IsHasCardTarget(ec)

@@ -23,7 +23,7 @@ end
 function c72370114.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(72370114)==0 end
-	c:RegisterFlagEffect(72370114,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(72370114,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function c72370114.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +45,7 @@ function c72370114.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c72370114.desop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(c72370114.cfilter,tp,LOCATION_MZONE,0,e:GetHandler())
+	local ct=Duel.GetMatchingGroupCount(c72370114.cfilter,tp,LOCATION_MZONE,0,aux.ExceptThisCard(e))
 	local g=Duel.GetMatchingGroup(c72370114.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if ct>0 and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

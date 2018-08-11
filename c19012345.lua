@@ -10,7 +10,7 @@ function c19012345.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c19012345.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetLevel()<12
+	return ep~=tp and e:GetHandler():IsLevelBelow(11)
 end
 function c19012345.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -19,6 +19,6 @@ function c19012345.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+0x1ff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 	c:RegisterEffect(e1)
 end

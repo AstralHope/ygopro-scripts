@@ -10,7 +10,7 @@ function c98931003.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c98931003.filter(c)
-	return c:IsFaceup() and (c:GetLevel()==7 or c:GetRank()==7)
+	return c:IsFaceup() and (c:IsLevel(7) or c:IsRank(7))
 end
 function c98931003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c98931003.filter(chkc) end
@@ -25,7 +25,7 @@ function c98931003.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(700)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

@@ -30,7 +30,7 @@ function c77152542.spcon(e,c)
 		and Duel.IsExistingMatchingCard(c77152542.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c77152542.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:GetLevel()>=1
+	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsLevelAbove(1)
 end
 function c77152542.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c77152542.filter(chkc) and chkc~=e:GetHandler() end
@@ -46,7 +46,7 @@ function c77152542.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+0x1ff0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

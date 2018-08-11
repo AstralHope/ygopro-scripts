@@ -88,7 +88,7 @@ function c17228908.tglimit(e,c)
 end
 function c17228908.repfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetFlagEffect(17228908)==0
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c:GetFlagEffect(17228908)==0
 end
 function c17228908.desfilter(c,e)
 	return c:IsRace(RACE_DINOSAUR) and c:IsDestructable(e)
@@ -105,7 +105,7 @@ function c17228908.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		g:Clear()
 		local tc=tg:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(17228908,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
+			tc:RegisterFlagEffect(17228908,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
 			tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 			g:AddCard(tc)
 			tc=tg:GetNext()

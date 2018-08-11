@@ -18,7 +18,7 @@ function c63746411.initial_effect(c)
 end
 c63746411.xyz_number=106
 function c63746411.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 end
 function c63746411.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,12 +45,12 @@ function c63746411.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetCondition(c63746411.rcon)
-		tc:RegisterEffect(e1,true)
+		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		tc:RegisterEffect(e2,true)
+		tc:RegisterEffect(e2)
 	end
 end
 function c63746411.rcon(e)

@@ -19,7 +19,7 @@ function c73899015.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function c73899015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -34,7 +34,7 @@ function c73899015.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsCanAddCounter(0x1009,1) then
 		local atk=tc:GetAttack()
 		tc:AddCounter(0x1009,1)
-		if atk>0 and tc:GetAttack()==0 then
+		if atk>0 and tc:IsAttack(0) then
 			Duel.RaiseEvent(tc,EVENT_CUSTOM+54306223,e,0,0,0,0)
 		end
 	end

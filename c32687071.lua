@@ -26,8 +26,10 @@ function c32687071.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_TO_HAND)
 	e3:SetRange(LOCATION_PZONE)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(1,1)
 	e3:SetCondition(c32687071.limcon)
-	e3:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_DECK))
 	c:RegisterEffect(e3)
 end
 function c32687071.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -36,8 +38,8 @@ end
 function c32687071.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.HintSelection(Group.FromCards(c))
-	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(32687071,0)) then
-		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
+	if Duel.CheckReleaseGroup(tp,nil,1,c) and Duel.SelectYesNo(tp,aux.Stringid(32687071,0)) then
+		local g=Duel.SelectReleaseGroup(tp,nil,1,1,c)
 		Duel.Release(g,REASON_COST)
 	else Duel.Destroy(c,REASON_COST) end
 end

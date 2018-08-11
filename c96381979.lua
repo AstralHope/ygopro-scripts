@@ -72,12 +72,12 @@ function c96381979.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e2)
 		tc=g:GetNext()
 	end
@@ -101,7 +101,7 @@ function c96381979.afilter1(c,g)
 	return g:IsExists(c96381979.afilter2,1,c,c:GetAttack())
 end
 function c96381979.afilter2(c,atk)
-	return c:GetAttack()==atk
+	return c:IsAttack(atk)
 end
 function c96381979.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

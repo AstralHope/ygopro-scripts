@@ -36,7 +36,7 @@ end
 function c69230391.otcon(e,c,minc)
 	if c==nil then return true end
 	local mg=Duel.GetMatchingGroup(c69230391.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	return c:IsLevelAbove(7) and minc<=1 and Duel.CheckTribute(c,1,1,mg)
 end
 function c69230391.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c69230391.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -50,6 +50,7 @@ end
 function c69230391.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 	if e:GetLabel()==1 then
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
 	end

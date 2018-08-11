@@ -5,12 +5,6 @@ function c80896940.initial_effect(c)
 	aux.EnablePendulumAttribute(c,false)
 	--synchro summon
 	aux.AddSynchroMixProcedure(c,c80896940.matfilter1,nil,nil,aux.NonTuner(Card.IsType,TYPE_SYNCHRO),1,99)
-	--no tuner check
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(80896940)
-	c:RegisterEffect(e1)
 	--indes
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -66,8 +60,7 @@ function c80896940.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c80896940.matfilter1(c)
-	return c:IsType(TYPE_TUNER)
-		or (c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsNotTuner())
+	return c:IsType(TYPE_TUNER) or (c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM))
 end
 function c80896940.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -79,13 +72,13 @@ function c80896940.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 	tc:RegisterEffect(e2)
 end
 function c80896940.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -102,7 +95,7 @@ function c80896940.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc=tg:GetNext()
 	end
@@ -124,15 +117,21 @@ function c80896940.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c80896940.mfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsType(TYPE_TUNER)
+	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c80896940.valcheck(e,c)
 	local g=c:GetMaterial()
-	if c:GetFlagEffect(80896940)~=0 or g:IsExists(c80896940.mfilter,1,nil) then
-		e:GetLabelObject():SetLabel(1)
-	else
-		e:GetLabelObject():SetLabel(0)
+	local tg=g:Filter(c80896940.mfilter,nil)
+	for tc in aux.Next(tg) do
+		g:RemoveCard(tc)
+		local flag=g:FilterCount(aux.NonTuner(Card.IsType,TYPE_SYNCHRO),nil)==g:GetCount()
+		g:AddCard(tc)
+		if flag then
+			e:GetLabelObject():SetLabel(1)
+			return
+		end
 	end
+	e:GetLabelObject():SetLabel(0)
 end
 function c80896940.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,math.ceil(Duel.GetLP(1-tp)/2))

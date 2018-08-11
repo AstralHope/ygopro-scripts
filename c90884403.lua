@@ -47,7 +47,7 @@ function c90884403.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c90884403.sprfilter(c)
-	return c:IsFaceup() and c:GetLevel()>7 and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsLevelAbove(8) and c:IsAbleToGraveAsCost()
 end
 function c90884403.sprfilter1(c,tp,g,sc)
 	local lv=c:GetLevel()
@@ -55,7 +55,7 @@ function c90884403.sprfilter1(c,tp,g,sc)
 end
 function c90884403.sprfilter2(c,tp,mc,sc,lv)
 	local sg=Group.FromCards(c,mc)
-	return c:GetLevel()==lv and not c:IsType(TYPE_TUNER)
+	return c:IsLevel(lv) and not c:IsType(TYPE_TUNER)
 		and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 end
 function c90884403.sprcon(e,c)
@@ -112,7 +112,7 @@ function c90884403.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

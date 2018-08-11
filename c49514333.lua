@@ -32,14 +32,14 @@ function c49514333.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SEND_REPLACE)
 	e1:SetTarget(c49514333.reptg)
 	e1:SetValue(c49514333.repval)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetLabelObject(e)
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end
 function c49514333.repfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetDestination()==LOCATION_GRAVE and c:IsReason(REASON_DESTROY)
-		and c:GetReasonPlayer()~=tp and c:GetOwner()==tp and bit.band(c:GetOriginalType(),TYPE_TRAP)~=0 and c:IsCanTurnSet()
+		and c:GetReasonPlayer()==1-tp and c:GetOwner()==tp and bit.band(c:GetOriginalType(),TYPE_TRAP)~=0 and c:IsCanTurnSet()
 end
 function c49514333.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -46,7 +46,7 @@ function c82697249.ctfilter(c)
 end
 function c82697249.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,c)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,aux.ExceptThisCard(e))
 	if Duel.Destroy(g,REASON_EFFECT)~=0 then
 		local ct=Duel.GetOperatedGroup():FilterCount(c82697249.ctfilter,nil)
 		if ct>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
@@ -56,7 +56,7 @@ function c82697249.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetValue(ct*300)
-			e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

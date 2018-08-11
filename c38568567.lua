@@ -15,7 +15,7 @@ function c38568567.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function c38568567.cfilter(c)
-	return c:GetLevel()==4 and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
+	return c:IsLevel(4) and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
 end
 function c38568567.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c38568567.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -51,7 +51,7 @@ function c38568567.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end

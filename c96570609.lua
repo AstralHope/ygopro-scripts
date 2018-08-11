@@ -31,7 +31,7 @@ function c96570609.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetRange(LOCATION_HAND)
 	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
+	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e4:SetCondition(c96570609.sumcon)
 	e4:SetCost(c96570609.sumcost)
 	e4:SetTarget(c96570609.sumtg)
@@ -44,7 +44,7 @@ end
 function c96570609.otcon(e,c,minc)
 	if c==nil then return true end
 	local mg=Duel.GetMatchingGroup(c96570609.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	return c:IsLevelAbove(7) and minc<=1 and Duel.CheckTribute(c,1,1,mg)
 end
 function c96570609.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c96570609.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -59,7 +59,7 @@ function c96570609.tgfilter(c)
 	return c:IsSetCard(0xbe) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
 end
 function c96570609.spfilter(c,e,tp)
-	return c:IsAttackAbove(2400) and c:GetDefense()==1000 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttackAbove(2400) and c:IsDefense(1000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c96570609.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -87,7 +87,7 @@ function c96570609.spop(e,tp,eg,ep,ev,re,r,rp)
 		if tc then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			local fid=e:GetHandler():GetFieldID()
-			tc:RegisterFlagEffect(96570609,RESET_EVENT+0x1fe0000,0,1,fid)
+			tc:RegisterFlagEffect(96570609,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)

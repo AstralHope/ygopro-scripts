@@ -19,7 +19,7 @@ function c46589034.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c46589034.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsLevelAbove(1) and c:GetAttack()~=0 and c:GetDefense()~=0
+	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsLevelAbove(1) and c:IsAttackAbove(1) and c:IsDefenseAbove(1)
 end
 function c46589034.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c46589034.cfilter(chkc) end
@@ -48,7 +48,7 @@ function c46589034.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(tc:GetLevel())
-			e1:SetReset(RESET_EVENT+0x1ff0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 			c:RegisterEffect(e1)
 			Duel.SpecialSummonComplete()
 		end

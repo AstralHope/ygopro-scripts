@@ -67,7 +67,7 @@ function c98777036.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c98777036.ctffilter(c,lv)
-	return c:IsControlerCanBeChanged() and c:IsFaceup() and c:GetLevel()==lv
+	return c:IsControlerCanBeChanged() and c:IsFaceup() and c:IsLevel(lv)
 end
 function c98777036.ctfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
@@ -110,7 +110,7 @@ function c98777036.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

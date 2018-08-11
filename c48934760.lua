@@ -16,7 +16,7 @@ function c48934760.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c48934760.cfilter,1,nil,tp)
 end
 function c48934760.filter(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function c48934760.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c48934760.filter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -32,6 +32,7 @@ function c48934760.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		local te=tc:GetActivateEffect()
+		te:UseCountLimit(tp,1,true)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end

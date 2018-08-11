@@ -6,7 +6,7 @@ function c13629812.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCost(c13629812.cost)
 	e1:SetTarget(c13629812.target)
 	e1:SetOperation(c13629812.operation)
@@ -50,7 +50,7 @@ function c13629812.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(seq)
 		e1:SetCondition(c13629812.discon)
 		e1:SetOperation(c13629812.disop)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -63,7 +63,7 @@ end
 function c13629812.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetFirstCardTarget()
-	if tc and tc:IsLocation(LOCATION_REMOVED) and not c:IsLocation(LOCATION_DECK) then
+	if tc and tc:IsLocation(LOCATION_REMOVED) then
 		e:SetLabelObject(tc)
 		tc:CreateEffectRelation(e)
 		return true

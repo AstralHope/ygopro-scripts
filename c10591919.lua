@@ -22,7 +22,7 @@ function c10591919.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c10591919.filter(c,e,tp)
-	return c:IsSetCard(0x26) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x26) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10591919.cona(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()
@@ -40,7 +40,7 @@ function c10591919.opa(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	local fid=e:GetHandler():GetFieldID()
-	tc:RegisterFlagEffect(10591919,RESET_EVENT+0x1fe0000,0,1,fid)
+	tc:RegisterFlagEffect(10591919,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)

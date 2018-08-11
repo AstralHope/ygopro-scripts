@@ -45,7 +45,7 @@ end
 function c23064604.otcon(e,c,minc)
 	if c==nil then return true end
 	local mg=Duel.GetMatchingGroup(c23064604.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	return c:IsLevelAbove(7) and minc<=1 and Duel.CheckTribute(c,1,1,mg)
 end
 function c23064604.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c23064604.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -131,7 +131,7 @@ function c23064604.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,c23064604.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c23064604.thfilter(c)
-	return c:IsAttackAbove(2400) and c:GetDefense()==1000 and c:IsAbleToHand()
+	return c:IsAttackAbove(2400) and c:IsDefense(1000) and c:IsAbleToHand()
 end
 function c23064604.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c23064604.thfilter(chkc) end

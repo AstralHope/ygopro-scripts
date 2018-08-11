@@ -64,13 +64,13 @@ function c56585883.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c56585883.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(56585883,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(56585883,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function c56585883.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(56585883)>0
 end
 function c56585883.thfilter(c)
-	return c:IsAttackBelow(1500) and c:IsRace(RACE_WINDBEAST) and c:GetLevel()==4 and c:IsAbleToHand()
+	return c:IsAttackBelow(1500) and c:IsRace(RACE_WINDBEAST) and c:IsLevel(4) and c:IsAbleToHand()
 end
 function c56585883.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c56585883.thfilter,tp,LOCATION_DECK,0,1,nil) end

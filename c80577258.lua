@@ -25,8 +25,9 @@ function c80577258.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c80577258.eftg(e,c)
-	local g=e:GetHandler():GetColumnGroup(1,1)
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and c:GetSequence()<5 and g:IsContains(c)
+	local seq=c:GetSequence()
+	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109)
+		and seq<5 and math.abs(e:GetHandler():GetSequence()-seq)<=1
 end
 function c80577258.thfilter(c)
 	return c:IsSetCard(0x109) and c:IsAbleToHand()
@@ -45,7 +46,9 @@ function c80577258.thop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_TO_HAND)
-	e1:SetTargetRange(LOCATION_DECK,0)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_DECK))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

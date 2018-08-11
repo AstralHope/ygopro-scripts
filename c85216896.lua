@@ -32,8 +32,8 @@ function c85216896.matfilter(c)
 end
 function c85216896.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
-	return c:GetPreviousControler()==tp and bit.extract(zone,seq)~=0 and c:GetSummonLocation()==LOCATION_EXTRA
-		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)
+	return c:GetPreviousControler()==tp and bit.extract(zone,seq)~=0 and c:GetSummonLocation()==LOCATION_EXTRA and c:IsPreviousLocation(LOCATION_MZONE)
+		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function c85216896.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone()
@@ -74,7 +74,7 @@ function c85216896.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()~=2 then return end
 	for tc in aux.Next(g) do
 		if Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-			tc:RegisterFlagEffect(85216896,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(85216896,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 	g:KeepAlive()
