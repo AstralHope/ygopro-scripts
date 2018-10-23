@@ -50,6 +50,7 @@ function c17032740.initial_effect(c)
 end
 c17032740.material_setcode=0x8
 c17032740.toss_coin=true
+c17032740.card_code_list={89943723}
 function c17032740.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
@@ -112,8 +113,10 @@ function c17032740.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
+	if c:IsLocation(LOCATION_EXTRA) then
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
+	end
 end
 function c17032740.coincon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1

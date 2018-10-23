@@ -17,7 +17,6 @@ function c36100154.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c36100154.atkcon(e)
-	c36100154[0]=false
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function c36100154.atktg(e,c)
@@ -25,8 +24,9 @@ function c36100154.atktg(e,c)
 end
 function c36100154.atkval(e,c)
 	local d=Duel.GetAttackTarget()
-	if c36100154[0] or c:GetAttack()<d:GetAttack() then
-		c36100154[0]=true
+	if c:GetFlagEffect(36100154)~=0 then return 1000 end
+	if c:GetAttack()<d:GetAttack() then
+		c:RegisterFlagEffect(36100154,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 		return 1000
 	else return 0 end
 end

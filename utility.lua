@@ -241,8 +241,8 @@ function Auxiliary.Tuner(f,...)
 end
 function Auxiliary.NonTuner(f,...)
 	local ext_params={...}
-	return	function(target)
-				return target:IsNotTuner() and (not f or f(target,table.unpack(ext_params)))
+	return	function(target,syncard)
+				return target:IsNotTuner(syncard) and (not f or f(target,table.unpack(ext_params)))
 			end
 end
 function Auxiliary.GetValueType(v)
@@ -348,8 +348,8 @@ end
 function Auxiliary.SynMaterialFilter(c,syncard)
 	return c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
 end
-function Auxiliary.SynLimitFilter(c,f,e)
-	return f and not f(e,c)
+function Auxiliary.SynLimitFilter(c,f,e,syncard)
+	return f and not f(e,c,syncard)
 end
 function Auxiliary.GetSynchroLevelFlowerCardian(c)
 	return 2
@@ -404,7 +404,7 @@ function Auxiliary.SynMixTarget(f1,f2,f3,f4,minc,maxc,gc)
 				for i=0,maxc-1 do
 					local mg2=mg:Clone()
 					if f4 then
-						mg2=mg2:Filter(f4,nil)
+						mg2=mg2:Filter(f4,nil,c)
 					end
 					local cg=mg2:Filter(Auxiliary.SynMixCheckRecursive,g4,tp,g4,mg2,i,minc,maxc,c,g,smat,gc)
 					if cg:GetCount()==0 then break end
@@ -458,7 +458,7 @@ function Auxiliary.SynMixFilter4(c,f4,minc,maxc,syncard,mg1,smat,c1,c2,c3,gc)
 	if c3 then sg:AddCard(c3) end
 	local mg=mg1:Clone()
 	if f4 then
-		mg=mg:Filter(f4,nil)
+		mg=mg:Filter(f4,nil,syncard)
 	end
 	return aux.SynMixCheck(mg,sg,minc-1,maxc-1,syncard,smat,gc)
 end
@@ -501,7 +501,7 @@ function Auxiliary.SynMixCheckGoal(tp,sg,minc,ct,syncard,sg1,smat,gc)
 			local he,hf,hmin,hmax=c:GetHandSynchro()
 			if he then
 				found=true
-				if hf and hg:IsExists(Auxiliary.SynLimitFilter,1,c,hf,he) then return false end
+				if hf and hg:IsExists(Auxiliary.SynLimitFilter,1,c,hf,he,syncard) then return false end
 				if (hmin and hct<hmin) or (hmax and hct>hmax) then return false end
 			end
 		end
@@ -515,7 +515,7 @@ function Auxiliary.SynMixCheckGoal(tp,sg,minc,ct,syncard,sg1,smat,gc)
 				local llct=g:FilterCount(Card.IsLocation,c,lloc)
 				if llct~=lct then return false end
 			end
-			if lf and g:IsExists(Auxiliary.SynLimitFilter,1,c,lf,le) then return false end
+			if lf and g:IsExists(Auxiliary.SynLimitFilter,1,c,lf,le,syncard) then return false end
 			if (lmin and lct<lmin) or (lmax and lct>lmax) then return false end
 		end
 	end
@@ -1441,41 +1441,41 @@ function Auxiliary.AddRitualProcGreater(c,filter)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Auxiliary.RPGTarget(filter))
-	e1:SetOperation(Auxiliary.RPGOperation(filter))
+	e1:SetTarget(Auxiliary.RitualGreaterTarget(filter))
+	e1:SetOperation(Auxiliary.RitualGreaterOperation(filter))
 	c:RegisterEffect(e1)
 end
-function Auxiliary.RPGFilter(c,filter,e,tp,m,ft)
+function Auxiliary.RitualGreaterFilter(c,filter,e,tp,m,ft)
 	if (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetOriginalLevel(),c)
 	else
-		return mg:IsExists(Auxiliary.RPGFilterF,1,nil,tp,mg,c)
+		return mg:IsExists(Auxiliary.RitualGreaterFilterF,1,nil,tp,mg,c)
 	end
 end
-function Auxiliary.RPGFilterF(c,tp,mg,rc)
+function Auxiliary.RitualGreaterFilterF(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,rc:GetOriginalLevel(),rc)
 	else return false end
 end
-function Auxiliary.RPGTarget(filter)
+function Auxiliary.RitualGreaterTarget(filter)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then
 					local mg=Duel.GetRitualMaterial(tp)
 					local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-					return ft>-1 and Duel.IsExistingMatchingCard(Auxiliary.RPGFilter,tp,LOCATION_HAND,0,1,nil,filter,e,tp,mg,ft)
+					return ft>-1 and Duel.IsExistingMatchingCard(Auxiliary.RitualGreaterFilter,tp,LOCATION_HAND,0,1,nil,filter,e,tp,mg,ft)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 			end
 end
-function Auxiliary.RPGOperation(filter)
+function Auxiliary.RitualGreaterOperation(filter)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				local mg=Duel.GetRitualMaterial(tp)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=Duel.SelectMatchingCard(tp,Auxiliary.RPGFilter,tp,LOCATION_HAND,0,1,1,nil,filter,e,tp,mg,ft)
+				local tg=Duel.SelectMatchingCard(tp,Auxiliary.RitualGreaterFilter,tp,LOCATION_HAND,0,1,1,nil,filter,e,tp,mg,ft)
 				local tc=tg:GetFirst()
 				if tc then
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
@@ -1485,7 +1485,7 @@ function Auxiliary.RPGOperation(filter)
 						mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetOriginalLevel(),tc)
 					else
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-						mat=mg:FilterSelect(tp,Auxiliary.RPGFilterF,1,1,nil,tp,mg,tc)
+						mat=mg:FilterSelect(tp,Auxiliary.RitualGreaterFilterF,1,1,nil,tp,mg,tc)
 						Duel.SetSelectedCard(mat)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 						local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetOriginalLevel(),tc)
@@ -1512,41 +1512,41 @@ function Auxiliary.AddRitualProcEqual(c,filter)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Auxiliary.RPETarget(filter))
-	e1:SetOperation(Auxiliary.RPEOperation(filter))
+	e1:SetTarget(Auxiliary.RitualEqualTarget(filter))
+	e1:SetOperation(Auxiliary.RitualEqualOperation(filter))
 	c:RegisterEffect(e1)
 end
-function Auxiliary.RPEFilter(c,filter,e,tp,m,ft)
+function Auxiliary.RitualEqualFilter(c,filter,e,tp,m,ft)
 	if (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetOriginalLevel(),1,99,c)
 	else
-		return mg:IsExists(Auxiliary.RPEFilterF,1,nil,tp,mg,c)
+		return mg:IsExists(Auxiliary.RitualEqualFilterF,1,nil,tp,mg,c)
 	end
 end
-function Auxiliary.RPEFilterF(c,tp,mg,rc)
+function Auxiliary.RitualEqualFilterF(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,rc:GetOriginalLevel(),0,99,rc)
 	else return false end
 end
-function Auxiliary.RPETarget(filter)
+function Auxiliary.RitualEqualTarget(filter)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then
 					local mg=Duel.GetRitualMaterial(tp)
 					local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-					return ft>-1 and Duel.IsExistingMatchingCard(Auxiliary.RPEFilter,tp,LOCATION_HAND,0,1,nil,filter,e,tp,mg,ft)
+					return ft>-1 and Duel.IsExistingMatchingCard(Auxiliary.RitualEqualFilter,tp,LOCATION_HAND,0,1,nil,filter,e,tp,mg,ft)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 			end
 end
-function Auxiliary.RPEOperation(filter)
+function Auxiliary.RitualEqualOperation(filter)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				local mg=Duel.GetRitualMaterial(tp)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=Duel.SelectMatchingCard(tp,Auxiliary.RPEFilter,tp,LOCATION_HAND,0,1,1,nil,filter,e,tp,mg,ft)
+				local tg=Duel.SelectMatchingCard(tp,Auxiliary.RitualEqualFilter,tp,LOCATION_HAND,0,1,1,nil,filter,e,tp,mg,ft)
 				local tc=tg:GetFirst()
 				if tc then
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
@@ -1556,7 +1556,7 @@ function Auxiliary.RPEOperation(filter)
 						mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetOriginalLevel(),1,99,tc)
 					else
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-						mat=mg:FilterSelect(tp,Auxiliary.RPEFilterF,1,1,nil,tp,mg,tc)
+						mat=mg:FilterSelect(tp,Auxiliary.RitualEqualFilterF,1,1,nil,tp,mg,tc)
 						Duel.SetSelectedCard(mat)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 						local mat2=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetOriginalLevel(),0,99,tc)
@@ -1583,41 +1583,41 @@ function Auxiliary.AddRitualProcEqual2(c,filter)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Auxiliary.RPETarget2(filter))
-	e1:SetOperation(Auxiliary.RPEOperation2(filter))
+	e1:SetTarget(Auxiliary.RitualEqualTarget2(filter))
+	e1:SetOperation(Auxiliary.RitualEqualOperation2(filter))
 	c:RegisterEffect(e1)
 end
-function Auxiliary.RPEFilter2(c,filter,e,tp,m,ft)
+function Auxiliary.RitualEqualFilter2(c,filter,e,tp,m,ft)
 	if (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
 	else
-		return mg:IsExists(Auxiliary.RPEFilter2F,1,nil,tp,mg,c)
+		return mg:IsExists(Auxiliary.RitualEqualFilter2F,1,nil,tp,mg,c)
 	end
 end
-function Auxiliary.RPEFilter2F(c,tp,mg,rc)
+function Auxiliary.RitualEqualFilter2F(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,rc:GetLevel(),0,99,rc)
 	else return false end
 end
-function Auxiliary.RPETarget2(filter)
+function Auxiliary.RitualEqualTarget2(filter)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then
 					local mg=Duel.GetRitualMaterial(tp)
 					local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-					return ft>-1 and Duel.IsExistingMatchingCard(Auxiliary.RPEFilter2,tp,LOCATION_HAND,0,1,nil,filter,e,tp,mg,ft)
+					return ft>-1 and Duel.IsExistingMatchingCard(Auxiliary.RitualEqualFilter2,tp,LOCATION_HAND,0,1,nil,filter,e,tp,mg,ft)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 			end
 end
-function Auxiliary.RPEOperation2(filter)
+function Auxiliary.RitualEqualOperation2(filter)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				local mg=Duel.GetRitualMaterial(tp)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=Duel.SelectMatchingCard(tp,Auxiliary.RPEFilter2,tp,LOCATION_HAND,0,1,1,nil,filter,e,tp,mg,ft)
+				local tg=Duel.SelectMatchingCard(tp,Auxiliary.RitualEqualFilter2,tp,LOCATION_HAND,0,1,1,nil,filter,e,tp,mg,ft)
 				local tc=tg:GetFirst()
 				if tc then
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
@@ -1627,7 +1627,7 @@ function Auxiliary.RPEOperation2(filter)
 						mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),1,99,tc)
 					else
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-						mat=mg:FilterSelect(tp,Auxiliary.RPEFilter2F,1,1,nil,tp,mg,tc)
+						mat=mg:FilterSelect(tp,Auxiliary.RitualEqualFilter2F,1,1,nil,tp,mg,tc)
 						Duel.SetSelectedCard(mat)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 						local mat2=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),0,99,tc)
@@ -1975,10 +1975,16 @@ function Auxiliary.bdogcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	return c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
 end
---condition of EVENT_TO_GRAVE + destroyed_by_opponent_from_field
+--condition of EVENT_TO_GRAVE + destroyed by opponent
 function Auxiliary.dogcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and rp==1-tp
+end
+--condition of EVENT_TO_GRAVE + destroyed by opponent + from field
+function Auxiliary.dogfcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
+		and c:IsReason(REASON_DESTROY) and rp==1-tp
 end
 --condition of "except the turn this card was sent to the Graveyard"
 function Auxiliary.exccon(e)
@@ -2095,7 +2101,7 @@ end
 --filter for necro_valley test
 function Auxiliary.NecroValleyFilter(f)
 	return	function(target,...)
-				return f(target,...) and not (target:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0))
+				return (not f or f(target,...)) and not (target:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.IsChainDisablable(0))
 			end
 end
 --shortcut for self-banish costs
@@ -2107,4 +2113,19 @@ end
 function Auxiliary.ExceptThisCard(e)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then return c else return nil end
+end
+--used for multi-linked zone(zone linked by two or more link monsters)
+function Auxiliary.GetMultiLinkedZone(tp)
+	local f=function(c)
+		return c:IsFaceup() and c:IsType(TYPE_LINK)
+	end
+	local lg=Duel.GetMatchingGroup(f,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local multi_linked_zone=0
+	local single_linked_zone=0
+	for tc in aux.Next(lg) do
+		local zone=tc:GetLinkedZone(tp)&0x7f
+		multi_linked_zone=single_linked_zone&zone|multi_linked_zone
+		single_linked_zone=single_linked_zone~zone
+	end
+	return multi_linked_zone
 end
